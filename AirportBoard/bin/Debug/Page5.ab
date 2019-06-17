@@ -1,0 +1,68 @@
+Color 3F
+clear
+run footer.ab
+Run header.ab
+
+Draw NewsTitleCard.df 29 8
+
+'This is just an animation
+sleep 5000
+box 4 22 7 29 8
+sleep 25
+box 4 24 9 28 7
+sleep 25
+box 4 26 11 27 6
+sleep 25
+box 4 28 13 26 5
+sleep 25
+box 4 30 15 25 4
+sleep 25
+box 4 32 17 24 3
+sleep 25
+box 4 34 19 23 2
+sleep 25
+box 4 36 21 22 1
+sleep 25
+box 4 38 22 21 1
+sleep 25
+box 4 40 23 20 1
+sleep 25
+box 4 42 23 19 1
+sleep 25
+box 4 44 23 18 1
+sleep 25
+box 4 46 23 17 1
+sleep 25
+box 4 48 23 16 1
+sleep 25
+box 4 50 23 15 1
+sleep 25
+box 4 52 23 14 1
+sleep 25
+box 4 54 23 13 1
+sleep 25
+box 4 56 23 12 1
+sleep 25
+box 4 58 23 11 1
+sleep 25
+box 4 60 23 10 1
+sleep 25
+box 4 62 23 9 1
+sleep 25
+box 4 64 23 8 1
+sleep 25
+box 4 66 23 7 1
+sleep 25
+box 4 68 23 6 1
+sleep 25
+box 4 70 23 5 1
+sleep 25
+box 4 72 23 4 1
+sleep 25
+box 4 74 23 3 1
+sleep 25
+box 4 76 23 2 1
+sleep 25
+box 4 78 23 1 1
+sleep 25
+box 4 80 23 0 1

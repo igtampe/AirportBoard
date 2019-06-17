@@ -1,0 +1,23 @@
+'DRAW File Leftpos TopPos
+'COLOR Background Foreground
+'TEXT~TEXT~COLOR~LEFTPOS~TOPPOS
+'BOX color Length Height Leftpos Toppos
+'CLOCK Color Leftpos Toppos
+color 2F
+clear
+Run Header.ab
+RUN Footer.ab
+DRAW Arrivals.DF 3 2
+
+TEXT~=======================================================================~1F~3~13
+TEXT~=======================================================================~1F~3~19
+
+Clock 0F 71 24
+sleep 3000
+BOX 1 76 22 2 1
+sleep 100
+box 1 79 23 0 1
+sleep 100
+box 1 80 23 0 1
+sleep 100
+

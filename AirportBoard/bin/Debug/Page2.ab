@@ -1,0 +1,27 @@
+Color 3F
+run footer.ab
+Run header.ab
+text~Weather~0F~0~0
+
+'Image
+draw weathericons\PartlyCloudyNight.df 1 6
+
+box 3 50 10 29 7 
+
+'Weather information:
+text~Volucris Intl: 18 F~3F~29~7
+text~Tonight's Weather: Partly Cloudy~3F~29~9
+
+'Description:
+'   LIMIT FOR LINES----------------------------------^|
+text~Tonight the UMS will freeze over, however the~3F~29~11
+text~snow will cease. Minor delays are expected.~3F~29~12
+
+'Further Weather Info:
+text~Humidity      : 40%~3F~29~14
+text~Chance of Rain: 45% ~3F~29~15
+text~Visibility    : 15 Miles~3F~29~16
+text~Wind          : 10 MPH E~3F~29~17
+
+
+sleep 15000

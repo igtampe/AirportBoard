@@ -1,0 +1,11 @@
+Color 3F
+clear
+run footer.ab
+Run header.ab
+text~Weather~0F~0~0
+
+'Centered Text
+CenterText~Weather for Common Destinations~2
+
+'WeatherWindow [WeatherWindow File] [Columns] [Rows] [Leftmost] [Topmost]
+WeatherWindow CommonDestinations.WW 2 3 10 4

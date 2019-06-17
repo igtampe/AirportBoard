@@ -1,0 +1,23 @@
+'DRAW File Leftpos TopPos
+'COLOR Background Foreground
+'TEXT~TEXT~COLOR~LEFTPOS~TOPPOS
+'BOX color Length Height Leftpos Toppos
+'CLOCK Color Leftpos Toppos
+
+COLOR 8F
+CLEAR
+DRAW VOLUCRISLOGO.DF 3 2
+TEXT~=======================================================================~3F~3~13
+TEXT~=======================================================================~3F~3~19
+TEXT~International~3F~56~17
+TEXT~Airport~3F~56~18
+RUN Footer.ab
+Clock 0F 71 24
+sleep 3000
+BOX 3 76 22 2 1
+sleep 100
+box 3 79 24 0 0
+sleep 100
+box 3 80 24 0 0
+sleep 100
+

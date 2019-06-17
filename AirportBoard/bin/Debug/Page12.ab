@@ -1,0 +1,42 @@
+'DRAW File Leftpos TopPos
+'COLOR Background Foreground
+'TEXT~TEXT~COLOR~LEFTPOS~TOPPOS
+'BOX color Length Height Leftpos Toppos
+'CLOCK Color Leftpos Toppos
+color 8F
+clear
+
+
+Run Header.ab
+RUN Footer.ab
+
+draw IYS4.df 1 3
+
+box 0 37 18 42 3
+
+TEXT~The TSA reminds you:~0F~43~4
+
+TEXT~-Certain objects are not permitted  ~0F~43~6
+TEXT~ beyond the security checkpoint:    ~0F~43~7
+TEXT~ Bows,Arrows, Swords, TNT, Potions  ~0F~43~8
+TEXT~ of Harm, Weakness, Strength, Etc.  ~0F~43~9
+
+TEXT~-DO NOT Pick up objects from unknown~0F~43~11
+TEXT~ or dead players. Maintain yourself ~0F~43~12
+TEXT~ in good health with complementary  ~0F~43~13
+TEXT~ apples from the TSA.               ~0F~43~14
+
+
+TEXT~-DO NOT DROP ITEMS. Dropped items   ~0F~43~16
+TEXT~ are subject to search and removal  ~0F~43~17
+
+sleep 15000
+
+
+    
+
+  
+    
+
+  
+

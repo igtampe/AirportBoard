@@ -1,0 +1,27 @@
+Color 3F
+run footer.ab
+Run header.ab
+text~Weather~0F~0~0
+
+'Image
+draw weathericons\Thunder.df 1 6
+
+box 3 50 10 29 7 
+
+'Weather information:
+text~Volucris Intl: 40 F~3F~29~7
+text~Tomorrow's Weather: Scattered Thunderstorms~3F~29~9
+
+'Description:
+'   LIMIT FOR LINES----------------------------------^|
+text~Tomorrow expect scattered thunderstorms as the~3F~29~11
+text~snow system finally begins to dissipate.~3F~29~12
+
+'Further Weather Info:
+text~Humidity      : 50%~3F~29~14
+text~Chance of Rain: 60% ~3F~29~15
+text~Visibility    : 10 Miles~3F~29~16
+text~Wind          : 15 MPH SSE~3F~29~17
+
+
+sleep 15000

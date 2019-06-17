@@ -1,0 +1,26 @@
+Color 3F
+run footer.ab
+Run header.ab
+text~Weather~0F~0~0
+
+'Image
+draw weathericons\snow.df 1 6
+
+box 3 50 10 29 7 
+
+'Weather information:
+text~Volucris Intl: 30 F~3F~29~7
+text~Today's Weather: Heavy Snow~3F~29~9
+
+'Description:
+'   LIMIT FOR LINES----------------------------------^|
+text~Expect heavy delays for today as a low pressure~3F~29~11
+text~system blows over the entire UMS.~3F~29~12
+
+'Further Weather Info:
+text~Humidity      : 50%~3F~29~14
+text~Chance of Rain: 90% ~3F~29~15
+text~Visibility    : 5 Miles~3F~29~16
+text~Wind          : 20 MPH SE~3F~29~17
+
+sleep 15000

@@ -1,0 +1,12 @@
+Color 4F
+clear
+run footer.ab
+Run header.ab
+
+text~News~0F~0~0
+
+'CenterText [Text to Center] [Line to center it on]
+CenterText~News provided by the UMS Reliant~2
+
+'NewsWindow [NewsPage File]
+NewsWindow ReliantNews.NP

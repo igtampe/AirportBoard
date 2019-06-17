@@ -1,0 +1,64 @@
+;ARRIVAlS BOARD
+;
+;--(TERMINAL LETTER OR NUMBER)
+;
+;~Airline Color~Airline~Flight Number~Gate~Time~Status~destination
+;Status:0: ON TIME, 1 BOARDING, 2 DELAYED, 3 CANCELED, 4 ARRIVED
+
+--A
+~A~ISLAND HOP~7 ~A1~10 30 AM~0~ALPHA ISLANDS               
+~A~ISLAND HOP~8 ~A4~11 30 AM~0~BETA ISLANDS                
+~A~ISLAND HOP~9 ~A4~10 00 AM~0~DELTA ISLANDS               
+~A~ISLAND HOP~21~A4~12 00 PM~0~DELTA ISLANDS               
+~A~ISLAND HOP~10~A2~11 00 AM~0~GAMMA ISLANDS               
+~B~SKYFLY    ~41~A5~11 30 AM~0~GAMMA ISLANDS               
+~A~ISLAND HOP~12~A3~ 8 00 AM~4~UMSTEP                      
+~A~ISLAND HOP~48~A3~10 30 AM~0~UMSTEP                      
+~A~ISLAND HOP~11~A3~ 9 00 AM~0~ZULU ISLANDS                
+~A~ISLAND HOP~17~A3~11 30 AM~0~ZULU ISLANDS                
+
+
+--B
+~E~ALLIUM AIR~103 ~B4 ~7:00 PM~3~PARIS CHARLES DE GAULLE
+
+--C
+~E~GOLDEN AIR~923 ~C9 ~10 00 AM~0~BARCELONA                   
+~B~DIAMOND A.~30  ~C7 ~ 8 00 AM~4~CHARLOTTESVILLE             
+~7~IRON CONN.~320 ~C6 ~ 9 00 AM~0~CHICAGO O'HARE              
+~D~DRAGON AIR~120 ~C3 ~ 8 00 AM~4~EDMONTON                    
+~D~DRAGON AIR~103 ~C3 ~ 9 30 AM~0~EDMONTON                    
+~E~GOLDEN AIR~1492~C9 ~11 30 AM~0~FRANKFURT                   
+~E~GOLDEN AIR~401 ~C11~ 9 30 AM~0~HONG KONG                   
+~A~ADAM AIR  ~4313~C1 ~ 8 00 AM~4~LONDON HEATHROW             
+~E~GOLDEN AIR~4132~C10~ 9 30 AM~0~MADRID                      
+~7~IRON CONN.~90  ~C5 ~ 7 45 AM~4~NEW YORK JFK                
+~7~IRON CONN.~95  ~C5 ~ 9 00 AM~0~NEW YORK LA GUARDIA         
+~E~GOLDEN AIR~1323~C11~11 00 AM~0~PARIS CHARLES DE GAULLE     
+~D~DRAGON AIR~150 ~C2 ~ 9 30 AM~2~QUEBEC                      
+~B~DIAMOND A.~14  ~C8 ~ 9 00 AM~0~SALT LAKE CITY              
+~E~GOLDEN AIR~144 ~C9 ~ 9 00 AM~0~SEOUL                       
+~D~DRAGON AIR~444 ~C4 ~ 9 30 AM~0~VANCOUVER                   
+
+
+--D
+~9~GOFLY~1643~D3~ 9 15 AM~0~BOSTON                      
+~9~GOFLY~673 ~D6~ 8 30 AM~4~CANCUN                      
+~9~GOFLY~738 ~D4~ 9 30 AM~0~FT. LAUDERDALE              
+~9~GOFLY~5723~D2~ 8 00 AM~4~KINGSTON                    
+~9~GOFLY~132 ~D7~ 9 00 AM~0~MEXICO CITY                 
+~9~GOFLY~434 ~D1~10 30 AM~0~MIAMI                       
+~9~GOFLY~1414~D1~ 9 30 AM~0~NEW YORK JFK                
+~9~GOFLY~1423~D5~11 30 AM~2~ORLANDO                     
+~9~GOFLY~1323~D3~ 8 00 AM~4~SANTO DOMINGO               
+
+
+--E
+~5~SOLARIS~4123~E2~10 00 AM~0~ATLANTA                     
+~5~SOLARIS~7443~E4~10 30 AM~0~ATLANTA                     
+~5~SOLARIS~1123~E1~ 9 30 AM~0~BERMUDA                     
+~5~SOLARIS~433 ~E2~ 8 30 AM~4~BOSTON                      
+~5~SOLARIS~395 ~E3~ 8 00 AM~4~CONNETICUT                  
+~5~SOLARIS~1232~E5~ 9 15 AM~0~JACKSONVILLE                
+~5~SOLARIS~111 ~E4~ 9 00 AM~0~NEW YORK LA GUARDIA         
+~5~SOLARIS~1323~E5~10 30 AM~0~ORLANDO                     
+~5~SOLARIS~150 ~E6~ 8 00 AM~4~PHILLADELPHIA               

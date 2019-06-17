@@ -1,0 +1,9 @@
+Color 1F
+clear
+run footer.ab
+Run header.ab
+
+text~Arrivals~0F~0~0
+
+'FlightWindow [FlightWindowFile] [IsDepartures]
+FlightWindow ARRIVALS.FW FALSE
