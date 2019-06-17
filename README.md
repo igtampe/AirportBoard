@@ -31,7 +31,7 @@ COLOR [Background][Foreground]
      Color changes the color of all text typed afterwards. Use a Hexadecimal number to specify background and foreground colors. There 
      is no space
      
-TEXT~TEXT~COLOR~LEFTPOS~TOPPOS
+TEXT~[TEXT]~[COLOR]~[LEFTPOS]~[TOPPOS]
 
      Text is the only command separated with tildes. This is to allow spaces in the text you write. Color is specified with two
      hexadecimal numbers. Use LeftPos and TopPos to specify where the text should start.
