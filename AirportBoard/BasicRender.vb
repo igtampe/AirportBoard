@@ -1,12 +1,26 @@
 ﻿
 Imports System.IO
 
-Public Class BasicRender
+Public Module BasicRender
+
+    '===============================================================
+    '                  BASIC RENDER VERSION 2.3
+    '===============================================================
+    '(C)2020 Igtampe No rights Reserved.
+    '
+    'This class is designed to help and quickly render items
+    'onscreen in a commandline display. Simply set a few parameters
+    'and you should be good to go!
+
+    'It also provides some basic utilities to make coding on VB.NET
+    'just a tiny bit more like coding on batch.
 
     'Configuration of BasicRender:
     Public Const WindowForegroundColor As ConsoleColor = ConsoleColor.DarkBlue
     Public Const WindowBackgroundColor As ConsoleColor = ConsoleColor.Gray
-    Public Const WindowClearCOlor As ConsoleColor = ConsoleColor.Black
+    Public Const WindowClearColor As ConsoleColor = ConsoleColor.Black
+    Public Const WindowHeight As Integer = 25
+    Public Const WindowWidth As Integer = 80
 
 
     ''' <summary>
@@ -21,7 +35,7 @@ Public Class BasicRender
     ''' <param name="TopPos">
     ''' Position of the sprite topwise (Starts at 0, must include LEFTPOS)
     ''' </param>
-    Public Shared Sub Block(ByVal BlockColor As ConsoleColor, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1)
+    Public Sub Block(ByVal BlockColor As ConsoleColor, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1)
         If Not leftpos = -1 And Not toppos = -1 Then
             Console.SetCursorPosition(leftpos, toppos)
         End If
@@ -53,7 +67,7 @@ Public Class BasicRender
     ''' <param name="TopPos">
     ''' Position of the sprite topwise (Starts at 0, must include LEFTPOS)
     ''' </param>
-    Public Shared Sub Sprite(ByVal sprite As String, ByVal Background As ConsoleColor, ByVal Foreground As ConsoleColor, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1)
+    Public Sub Sprite(ByVal sprite As String, ByVal Background As ConsoleColor, ByVal Foreground As ConsoleColor, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1)
         If Not leftpos = -1 And Not toppos = -1 Then
             Console.SetCursorPosition(leftpos, toppos)
         End If
@@ -76,22 +90,11 @@ Public Class BasicRender
     ''' <param name="height">Height dimension of the box</param>
     ''' <param name="leftpos">Leftmost position of the box</param>
     ''' <param name="toppos">Top most coordinate of the box</param>
-    Public Shared Sub Box(ByVal color As ConsoleColor, ByVal length As Integer, ByVal height As Integer, ByVal leftpos As Integer, ByVal toppos As Integer)
-
-
+    Public Sub Box(ByVal color As ConsoleColor, ByVal length As Integer, ByVal height As Integer, ByVal leftpos As Integer, ByVal toppos As Integer)
         Dim HeightCounter As Integer
-
         For HeightCounter = 0 To height - 1
-
             Row(color, length, leftpos, toppos + HeightCounter)
-
         Next
-
-
-
-
-
-
     End Sub
 
     ''' <summary>
@@ -109,13 +112,10 @@ Public Class BasicRender
     ''' <param name="TopPos">
     ''' Position of the sprite topwise (Starts at 0, must include LEFTPOS)
     ''' </param>
-    Public Shared Sub Row(ByVal RowColor As ConsoleColor, ByVal Length As Integer, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1)
-
-
+    Public Sub Row(ByVal RowColor As ConsoleColor, ByVal Length As Integer, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1)
         If Not leftpos = -1 And Not toppos = -1 Then
             Console.SetCursorPosition(leftpos, toppos)
         End If
-
 
         Dim OLDBC As ConsoleColor = Console.BackgroundColor
         Dim OLDFC As ConsoleColor = Console.ForegroundColor
@@ -128,7 +128,6 @@ Public Class BasicRender
 
         Console.BackgroundColor = OLDBC
         Console.ForegroundColor = OLDFC
-
     End Sub
 
     ''' <summary>
@@ -140,14 +139,14 @@ Public Class BasicRender
     ''' <param name="BackgroundColor">
     ''' In the event that the background isn't black, you can set it to be whatever color you want.
     ''' </param>
-    Public Shared Sub ClearLine(ByVal Line As Integer, Optional ByVal Backgroundcolor As ConsoleColor = ConsoleColor.Black)
-
-
-
+    Public Sub ClearLine(ByVal Line As Integer, Optional ByVal Backgroundcolor As ConsoleColor = ConsoleColor.Black)
         Dim OLDBC As ConsoleColor = Console.BackgroundColor
         Dim OLDFC As ConsoleColor = Console.ForegroundColor
         Console.BackgroundColor = Backgroundcolor
         Console.ForegroundColor = Backgroundcolor
+
+        Dim oldleft As Integer = Console.CursorLeft
+        Dim oldtop As Integer = Console.CursorTop
 
         Console.SetCursorPosition(0, Line)
 
@@ -155,32 +154,20 @@ Public Class BasicRender
             Console.Write(" ")
         Next
 
+        Console.SetCursorPosition(oldleft, oldtop)
+
         Console.BackgroundColor = OLDBC
         Console.ForegroundColor = OLDFC
-
-
     End Sub
 
     ''' <summary>
     ''' Centers Text
     ''' </summary>
     ''' <param name="Text">Text you wish to be centered</param>
-    Public Shared Sub CenterText(Text As String)
-        Dim Spacing As Integer = (79 - Text.Count) / 2
-        Dim OLDFC As ConsoleColor = Console.ForegroundColor
-        Console.ForegroundColor = Console.BackgroundColor
-
-
-        For x = 0 To Spacing
-            Console.Write(" ")
-        Next
-
-        Console.ForegroundColor = OLDFC
+    Public Sub CenterText(Text As String)
+        Dim Spacing As Integer = (WindowWidth - Text.Count - 3) / 2
+        SetPos(Spacing, Console.CursorTop)
         Console.Write(Text)
-
-
-
-
     End Sub
 
     ''' <summary>
@@ -191,16 +178,15 @@ Public Class BasicRender
     ''' <param name="height">Height dimension of the window</param>
     ''' <param name="leftpos">Leftmost position (Centered by default)</param>
     ''' <param name="toppos">Topmost position (Centered by default)</param>
-    Public Shared Sub Window(ByVal Title As String, ByVal length As Integer, ByVal height As Integer, Optional ByVal shadow As Boolean = False, Optional ByVal animated As Boolean = False, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1)
+    Public Sub Window(ByVal Title As String, ByVal length As Integer, ByVal height As Integer, Optional ByVal shadow As Boolean = False, Optional ByVal animated As Boolean = False, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1)
 
         If toppos = -1 Then
-            toppos = ((24) - height) / 2
+            toppos = ((WindowHeight) - height) / 2
         End If
 
         If leftpos = -1 Then
-            leftpos = ((79) - length) / 2
+            leftpos = ((WindowWidth) - length) / 2
         End If
-
 
         Title = " " & Title & " "
 
@@ -208,27 +194,26 @@ Public Class BasicRender
             If Title.Count >= length Then Exit Do
             Title = "═" & Title
             If Title.Count >= length Then Exit Do
-            Title = Title & "═"
+            Title &= "═"
         Loop
         Dim bottomborder As String = "═"
 
         Do
             If bottomborder.Count = Title.Count Then Exit Do
-            bottomborder = bottomborder & "═"
+            bottomborder &= "═"
         Loop
-
 
         If shadow = True Then
             Box(ConsoleColor.Black, length, height - 1, leftpos + 2, toppos + 2)
         End If
 
         If animated = True Then
-            Dim SmallLength As Integer = 1
             Dim SmallHeight As Integer = 1
 
+            Dim SmallLength As Integer
             For SmallLength = 1 To length Step CInt(length / height)
                 If Not SmallHeight = height Then
-                    SmallHeight = SmallHeight + 1
+                    SmallHeight += 1
                 End If
                 Box(WindowBackgroundColor, SmallLength, SmallHeight, leftpos, toppos)
                 Sleep(5)
@@ -239,9 +224,6 @@ Public Class BasicRender
         Box(WindowBackgroundColor, length, height, leftpos, toppos)
         Sprite(Title, WindowForegroundColor, ConsoleColor.White, leftpos, toppos)
         Sprite(bottomborder, WindowBackgroundColor, ConsoleColor.White, leftpos, toppos + height - 1)
-
-
-
     End Sub
 
     ''' <summary>
@@ -251,34 +233,32 @@ Public Class BasicRender
     ''' <param name="height">Height dimension of the window</param>
     ''' <param name="leftpos">Leftmost position (Centered by default)</param>
     ''' <param name="toppos">Topmost position (Centered by default)</param>
-    Public Shared Sub RemoveWindow(ByVal length As Integer, ByVal height As Integer, Optional ByVal animated As Boolean = False, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1)
+    Public Sub RemoveWindow(ByVal length As Integer, ByVal height As Integer, Optional ByVal animated As Boolean = False, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1)
 
         If toppos = -1 Then
-            toppos = ((24) - height) / 2
+            toppos = ((WindowHeight) - height) / 2
         End If
 
         If leftpos = -1 Then
-            leftpos = ((79) - length) / 2
+            leftpos = ((WindowWidth) - length) / 2
         End If
 
 
         If animated = True Then
-            Dim SmallLength As Integer = 1
             Dim SmallHeight As Integer = 1
 
+            Dim SmallLength As Integer
             For SmallLength = 1 To length + 2 Step CInt(length / height)
                 If Not SmallHeight = height + 1 Then
-                    SmallHeight = SmallHeight + 1
+                    SmallHeight += 1
                 End If
-                Box(WindowClearCOlor, SmallLength, SmallHeight, leftpos, toppos)
+                Box(WindowClearColor, SmallLength, SmallHeight, leftpos, toppos)
                 Sleep(5)
             Next
 
         End If
 
-
-        Box(WindowClearCOlor, length + 2, height + 1, leftpos, toppos)
-
+        Box(WindowClearColor, length + 2, height + 1, leftpos, toppos)
     End Sub
 
 
@@ -294,11 +274,10 @@ Public Class BasicRender
     ''' <param name="leftpos">Left position of the box</param>
     ''' <param name="toppos">right position of the box</param>
     ''' <returns></returns>
-    Public Shared Function DialogBox(ByVal text As String, ByVal Icon As Integer, ByVal Options As Integer, Optional ByVal shadow As Boolean = False, Optional ByVal animated As Boolean = False, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1) As Integer
+    Public Function DialogBox(ByVal text As String, ByVal Icon As Integer, ByVal Options As Integer, Optional ByVal shadow As Boolean = False, Optional ByVal animated As Boolean = False, Optional ByVal leftpos As Integer = -1, Optional ByVal toppos As Integer = -1) As Integer
 
         Dim length As Integer
         Dim height As Integer
-        Dim ButtonCenterAll As Boolean
         Dim title As String
 rerenderdialogbox:
 
@@ -306,43 +285,37 @@ rerenderdialogbox:
             Case 1
                 length = 39
                 height = 10
-                ButtonCenterAll = False
                 title = "Information"
 
             Case 2
                 length = 39
                 height = 10
-                ButtonCenterAll = False
                 title = "Warning"
 
             Case 3
                 length = 29
                 height = 7
-                ButtonCenterAll = True
                 title = "Critical"
 
             Case 5
                 length = 29
                 height = 7
-                ButtonCenterAll = True
                 title = "Notif"
 
             Case 4
                 length = 39
                 height = 10
-                ButtonCenterAll = False
                 title = "Question"
             Case Else
-                DialogBox = -1
-                Exit Function
+                Return -1
         End Select
 
         If toppos = -1 Then
-            toppos = ((24) - height) / 2
+            toppos = ((WindowHeight) - height) / 2
         End If
 
         If leftpos = -1 Then
-            leftpos = ((79) - length) / 2
+            leftpos = ((WindowWidth) - length) / 2
         End If
 
 
@@ -576,8 +549,8 @@ rerenderdialogbox:
                             If PressedKey = "RightArrow" Then Currentposition = 2
                             If PressedKey = "LeftArrow" Then Currentposition = 1
                         Loop
-                        DialogBox = Currentposition
                         RemoveWindow(39, 10, True)
+                        Return Currentposition
                     Case 3
                         Dim Currentposition As Integer = 1
                         Do
@@ -596,46 +569,54 @@ rerenderdialogbox:
                             If PressedKey = "RightArrow" Then Currentposition = 2
                             If PressedKey = "LeftArrow" Then Currentposition = 1
                         Loop
-                        DialogBox = Currentposition
                         RemoveWindow(39, 10, True)
-
-
-
+                        Return Currentposition
                     Case Else
-                        DialogBox = -1
-                        Exit Function
+                        Return -1
                 End Select
         End Select
+        Return -1
 
     End Function
 
     ''' <summary>
     ''' Sleep for a specified amount of miliseconds
     ''' </summary>
-    Public Shared Sub Sleep(time As Integer)
+    Public Sub Sleep(time As Integer)
         Threading.Thread.Sleep(time)
     End Sub
 
     ''' <summary>
     ''' Sets the position of the cursor to whatever you want.
     ''' </summary>
-    Public Shared Sub SetPos(left As Integer, top As Integer)
+    Public Sub SetPos(left As Integer, top As Integer)
         Console.SetCursorPosition(left, top)
     End Sub
 
     ''' <summary>
     ''' Press a key to continue
     ''' </summary>
-    Public Shared Sub Pause()
+    Public Sub Pause()
         Console.ReadKey(True)
     End Sub
+
+
+    ''' <summary>
+    ''' Sets the color of the console text
+    ''' </summary>
+    ''' <param name="FG"></param>
+    Public Sub Color(FG As ConsoleColor)
+        Console.ForegroundColor = FG
+        Console.BackgroundColor = ConsoleColor.Black
+    End Sub
+
 
     ''' <summary>
     ''' Change the color
     ''' </summary>
     ''' <param name="background"></param>
     ''' <param name="Foreground"></param>
-    Public Shared Sub Color(background As ConsoleColor, Foreground As ConsoleColor)
+    Public Sub Color(background As ConsoleColor, Foreground As ConsoleColor)
         Console.BackgroundColor = background
         Console.ForegroundColor = Foreground
     End Sub
@@ -647,39 +628,41 @@ rerenderdialogbox:
     ''' <param name="Reference">Dimension with reference to the window</param>
     ''' <param name="resulttype">0: Width or 1: Height</param>
     ''' <returns></returns>
-    Public Shared Function OnWindow(ByVal Dimension As Integer, ByVal Reference As Integer, resulttype As Integer) As Integer
+    Public Function OnWindow(ByVal Dimension As Integer, ByVal Reference As Integer, resulttype As Integer) As Integer
         Select Case resulttype
             Case 1
-                OnWindow = CInt(((24 + 25) - Dimension) / 2) + Reference
+                OnWindow = CInt(((WindowHeight) - Dimension) / 2) + Reference
             Case 0
-                OnWindow = CInt(((79 + 80) - Dimension) / 2) + Reference
+                OnWindow = CInt(((WindowWidth) - Dimension) / 2) + Reference
             Case Else
                 OnWindow = 0
         End Select
     End Function
 
-    Public Shared Function GetTopPos(ByVal Dimension As Integer) As Integer
-        GetTopPos = ((24) - Dimension) / 2
+    Public Function GetTopPos(ByVal Dimension As Integer) As Integer
+        GetTopPos = ((WindowHeight) - Dimension) / 2
     End Function
 
-    Public Shared Function GetLeftPos(ByVal Dimension As Integer) As Integer
-        GetLeftPos = CInt((79) - Dimension) / 2
+    Public Function GetLeftPos(ByVal Dimension As Integer) As Integer
+        GetLeftPos = CInt((WindowWidth) - Dimension) / 2
     End Function
+
+
     ''' <summary>
-    ''' Draw allows you to use a string of characters to "Draw" on screen.
-    ''' 
-    '''0 = Black       8 = Gray
-    '''1 = Blue        9 = Light Blue
-    '''2 = Green       A = Light Green
-    '''3 = Aqua        B = Light Aqua
-    '''4 = Red         C = Light Red
-    '''5 = Purple      D = Light Purple
-    '''6 = Yellow      E = Light Yellow
-    '''7 = White       F = Bright White
-    ''' 
+    ''' Draw allows you to use a string of characters to "Draw" on screen.<br></br>
+    ''' <br></br>
+    '''0 = Black       8 = Gray<br></br>
+    '''1 = Blue        9 = Light Blue<br></br>
+    '''2 = Green       A = Light Green<br></br>
+    '''3 = Aqua        B = Light Aqua<br></br>
+    '''4 = Red         C = Light Red<br></br>
+    '''5 = Purple      D = Light Purple<br></br>
+    '''6 = Yellow      E = Light Yellow<br></br>
+    '''7 = White       F = Bright White<br></br>
+    ''' <br></br>
     ''' </summary>
     ''' <param name="ColorString"></param>
-    Public Shared Sub Draw(ColorString As String)
+    Public Sub Draw(ColorString As String)
         For X = 0 To ColorString.Count - 1
             Select Case ColorString(X).ToString.ToUpper
                 Case "0"
@@ -720,7 +703,7 @@ rerenderdialogbox:
         Next
     End Sub
 
-    Public Shared Sub HiColorDraw(HiColorString As String)
+    Public Sub HiColorDraw(HiColorString As String)
         Dim HiColorRow() As String = HiColorString.Split("-")
 
         'An example would be 0F1-0F2-1F3
@@ -745,13 +728,11 @@ rerenderdialogbox:
                     Sprite("▓", CurrentPixelBackground, CurrentPixelForeground)
             End Select
 
-
         Next
-
 
     End Sub
 
-    Public Shared Sub HiColorDrawFromFile(Filename As String, leftpos As Integer, toppos As Integer)
+    Public Sub HiColorDrawFromFile(Filename As String, leftpos As Integer, toppos As Integer)
 
         If Not File.Exists(Filename) Then
             Sprite("[ ERROR ]", ConsoleColor.Red, ConsoleColor.Black)
@@ -759,7 +740,7 @@ rerenderdialogbox:
         Else
             FileOpen(1, Filename, OpenMode.Input)
 
-            Dim Graphic() As String
+            Dim Graphic(0) As String
             Dim I As Integer
 
             I = 0
@@ -767,7 +748,7 @@ rerenderdialogbox:
             While Not EOF(1)
                 ReDim Preserve Graphic(I)
                 Graphic(I) = LineInput(1)
-                I = I + 1
+                I += 1
             End While
             FileClose(1)
 
@@ -776,15 +757,11 @@ rerenderdialogbox:
                 HiColorDraw(Graphic(X))
             Next
 
-
-
         End If
-
-
 
     End Sub
 
-    Public Shared Sub DrawFromFile(Filename As String, leftpos As Integer, toppos As Integer)
+    Public Sub DrawFromFile(Filename As String, leftpos As Integer, toppos As Integer)
 
         If Not File.Exists(Filename) Then
             Sprite("[ ERROR ]", ConsoleColor.Red, ConsoleColor.Black)
@@ -792,7 +769,7 @@ rerenderdialogbox:
         Else
             FileOpen(1, Filename, OpenMode.Input)
 
-            Dim Graphic() As String
+            Dim Graphic(0) As String
             Dim I As Integer
 
             I = 0
@@ -800,7 +777,7 @@ rerenderdialogbox:
             While Not EOF(1)
                 ReDim Preserve Graphic(I)
                 Graphic(I) = LineInput(1)
-                I = I + 1
+                I += 1
             End While
             FileClose(1)
 
@@ -809,11 +786,7 @@ rerenderdialogbox:
                 Draw(Graphic(X))
             Next
 
-
-
         End If
-
-
 
     End Sub
     ''' <summary>
@@ -821,7 +794,7 @@ rerenderdialogbox:
     ''' </summary>
     ''' <param name="Message">The message you wish to display, dumb dumb</param>
     ''' <param name="LineBreak">Wether or not to put a linebreak</param>
-    Public Shared Sub Echo(Message As String, Optional LineBreak As Boolean = False)
+    Public Sub Echo(Message As String, Optional LineBreak As Boolean = False)
         If Message = "." Then
             Echo("", True)
             Exit Sub
@@ -843,11 +816,11 @@ rerenderdialogbox:
     ''' <param name="height">Height of the window</param>
     ''' <param name="leftpos">Leftpos in reference to the window</param>
     ''' <param name="toppos">Toppos in reference to the window</param>
-    Public Shared Sub WriteToWindow(Text As String, Length As Integer, height As Integer, leftpos As Integer, toppos As Integer)
+    Public Sub WriteToWindow(Text As String, Length As Integer, height As Integer, leftpos As Integer, toppos As Integer)
         Sprite(Text, WindowBackgroundColor, ConsoleColor.Black, GetLeftPos(Length) + leftpos, GetTopPos(height) + toppos)
     End Sub
 
-    Public Shared Function StringToColor(Doot As String) As ConsoleColor
+    Public Function StringToColor(Doot As String) As ConsoleColor
         Select Case Doot.ToUpper
             Case "0"
                 Return ConsoleColor.Black
@@ -885,4 +858,4 @@ rerenderdialogbox:
                 Return Console.BackgroundColor
         End Select
     End Function
-End Class
+End Module

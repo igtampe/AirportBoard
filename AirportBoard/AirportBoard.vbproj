@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2792234B-3CE8-40C1-A945-8448B309CF38}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>AirportBoard.Module1</StartupObject>
+    <StartupObject>AirportBoard.Main</StartupObject>
     <RootNamespace>AirportBoard</RootNamespace>
     <AssemblyName>AirportBoard</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -73,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicRender.vb" />
-    <Compile Include="Module1.vb" />
+    <Compile Include="Main.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -99,54 +99,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Debug\AirportBoard.exe.config" />
-    <None Include="bin\Debug\AirportBoard.zip" />
-    <None Include="bin\Debug\Arrivals.DF" />
-    <None Include="bin\Debug\Arrivals.fw" />
-    <None Include="bin\Debug\CommonDestinations.ww" />
-    <None Include="bin\Debug\Departures.df" />
-    <None Include="bin\Debug\Departures.fw" />
-    <None Include="bin\Debug\Doot.df" />
-    <None Include="bin\Debug\Footer.ab" />
-    <None Include="bin\Debug\Header.ab" />
-    <None Include="bin\Debug\IYS4.df" />
-    <None Include="bin\Debug\NewsTitleCard.df" />
-    <None Include="bin\Debug\Page0.ab" />
-    <None Include="bin\Debug\Page1.ab" />
-    <None Include="bin\Debug\Page10.ab" />
-    <None Include="bin\Debug\Page11.ab" />
-    <None Include="bin\Debug\Page12.ab" />
-    <None Include="bin\Debug\Page2.ab" />
-    <None Include="bin\Debug\Page3.ab" />
-    <None Include="bin\Debug\Page4.ab" />
-    <None Include="bin\Debug\Page5.ab" />
-    <None Include="bin\Debug\Page6.ab" />
-    <None Include="bin\Debug\Page7.ab" />
-    <None Include="bin\Debug\Page8.ab" />
-    <None Include="bin\Debug\Page9.ab" />
-    <None Include="bin\Debug\ReliantNews.np" />
-    <None Include="bin\Debug\Security.Df" />
-    <None Include="bin\Debug\TinyWeatherIcons\Cloudy.df" />
-    <None Include="bin\Debug\TinyWeatherIcons\Fog.df" />
-    <None Include="bin\Debug\TinyWeatherIcons\Haze.df" />
-    <None Include="bin\Debug\TinyWeatherIcons\Moon.df" />
-    <None Include="bin\Debug\TinyWeatherIcons\PartlyCloudyDay.df" />
-    <None Include="bin\Debug\TinyWeatherIcons\PartlyCloudyNight.df" />
-    <None Include="bin\Debug\TinyWeatherIcons\Rain.df" />
-    <None Include="bin\Debug\TinyWeatherIcons\Snow.df" />
-    <None Include="bin\Debug\TinyWeatherIcons\Sun.df" />
-    <None Include="bin\Debug\TinyWeatherIcons\Thunder.df" />
-    <None Include="bin\Debug\VolucrisLogo.df" />
-    <None Include="bin\Debug\WeatherIcons\Cloudy.df" />
-    <None Include="bin\Debug\WeatherIcons\Fog.df" />
-    <None Include="bin\Debug\WeatherIcons\Haze.df" />
-    <None Include="bin\Debug\WeatherIcons\Moon.df" />
-    <None Include="bin\Debug\WeatherIcons\PartlyCloudyDay.df" />
-    <None Include="bin\Debug\WeatherIcons\PartlyCloudyNight.df" />
-    <None Include="bin\Debug\WeatherIcons\Rain.df" />
-    <None Include="bin\Debug\WeatherIcons\Snow.df" />
-    <None Include="bin\Debug\WeatherIcons\Sun.df" />
-    <None Include="bin\Debug\WeatherIcons\Thunder.df" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -160,13 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AirportBoard.ico" />
-    <Content Include="bin\Debug\AirportBoard.exe" />
-    <Content Include="bin\Debug\AirportBoard.pdb" />
-    <Content Include="bin\Debug\AirportBoard.xml" />
-    <Content Include="bin\Debug\Henja2.exe" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Release\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

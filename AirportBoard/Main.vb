@@ -1,6 +1,6 @@
 ﻿Imports System.IO
-Imports AirportBoard.BasicRender
-Module Module1
+
+Module Main
 
     Public Structure AirportBoard
         Public PageType As Integer
