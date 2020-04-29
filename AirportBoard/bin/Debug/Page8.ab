@@ -5,5 +5,5 @@ Run header.ab
 
 text~Departures~0F~0~0
 
-'FlightWindow [FlightWindowFile] [IsDepartures]
-FlightWindow Departures.FW TRUE
+'FlightWindow [FlightWindowFile] [IsDepartures] [FooterFile]
+FlightWindow Departures.FW TRUE Footer.ab

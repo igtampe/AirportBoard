@@ -22,6 +22,27 @@ AirportBoard
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="T:AirportBoard.FlightWindow">
+ <summary>Holds and renders a flightwindow</summary>
+</member>
+<member name="T:AirportBoard.FlightWindow.Flight">
+ <summary>Holds a flight</summary>
+</member>
+<member name="T:AirportBoard.FlightWindow.Terminal">
+ <summary>Holds a terminal with a collection of flights</summary>
+</member>
+<member name="M:AirportBoard.FlightWindow.DrawTable">
+ <summary>Draws the FlightWindow table</summary>
+</member>
+<member name="M:AirportBoard.FlightWindow.Render">
+ <summary>Renders the flightwindow</summary>
+</member>
+<member name="T:AirportBoard.NewsWindow">
+ <summary>Holds and renders a NewsWindow</summary>
+</member>
+<member name="M:AirportBoard.NewsWindow.Render">
+ <summary>Renders a NewsWindow</summary>
+</member>
 <member name="M:AirportBoard.BasicRender.Block(System.ConsoleColor,System.Int32,System.Int32)">
  <summary>
  Renders a colored block of whatever color you choose
@@ -201,6 +222,36 @@ AirportBoard
  <param name="height">Height of the window</param>
  <param name="leftpos">Leftpos in reference to the window</param>
  <param name="toppos">Toppos in reference to the window</param>
+</member>
+<member name="T:AirportBoard.Main">
+ <summary>Holds the main processes of AirportBoard</summary>
+</member>
+<member name="M:AirportBoard.Main.Main">
+ <summary>Starts the AirportBoard</summary>
+</member>
+<member name="M:AirportBoard.Main.ScreenTest">
+ <summary>Tests screen to show all of what AirportBoard can do</summary>
+</member>
+<member name="M:AirportBoard.Main.MainMenu">
+ <summary>Handles the main operations</summary>
+</member>
+<member name="M:AirportBoard.Main.GetFileContents(System.String)">
+ <summary>Returns the contents of a file as an array</summary>
+</member>
+<member name="M:AirportBoard.Main.Run(System.String)">
+ <summary>Run an ABScript file</summary>
+</member>
+<member name="M:AirportBoard.Main.Clock(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32)">
+ <summary>Renders the current time to screen</summary>
+</member>
+<member name="M:AirportBoard.Main.DateRender(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32)">
+ <summary>Renders the current date to screen</summary>
+</member>
+<member name="M:AirportBoard.Main.LoadErrorPage(System.Exception,System.Int32)">
+ <summary>Shows a Guru Meditation Error after saving the error's stacktrace to disk</summary>
+</member>
+<member name="M:AirportBoard.Main.GuruMeditationError(System.String,System.String,System.String,System.String)">
+ <summary>Shows a guru meditation error</summary>
 </member>
 </members>
 </doc>
