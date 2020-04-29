@@ -1,7 +1,7 @@
 # AirportBoard
 A VB.NET Console public information board renderer
 
-[An example configuration is provided on the root under AIRPORTBOARD.ZIP]
+[An example configuration is provided in the release]
 
 AirportBoard uses its own scripting language called ABScript stored in .ab files. It sequentially loads page0.ab, page1.ab... etc until there is no more pages left, then loops. Along with this there should be a Header.ab and Footer.ab which may be called upon to render headers and footers at a moments notice. Each AB File can call upon a few select commands including the following:
 
