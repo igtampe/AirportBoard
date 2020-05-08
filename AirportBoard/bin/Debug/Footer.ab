@@ -1,2 +1,2 @@
-TEXT~Powered by AirportBoard 1.1                                                    ~0F~0~24
-Clock 0F 71 24
+BOX 0 79 1 0 24
+BOX 7 9 1 70 24

@@ -9,4 +9,4 @@ text~News~0F~0~0
 CenterText~News provided by the UMS Reliant~2
 
 'NewsWindow [NewsPage File]
-NewsWindow ReliantNews.NP Footer.ab
+NewsWindow ReliantNews.NP

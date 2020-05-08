@@ -9,3 +9,4 @@ CenterText~Weather for Common Destinations~2
 
 'WeatherWindow [WeatherWindow File] [Columns] [Rows] [Leftmost] [Topmost]
 WeatherWindow CommonDestinations.WW 2 3 10 4
+

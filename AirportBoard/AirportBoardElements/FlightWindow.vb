@@ -38,11 +38,9 @@ Public Class FlightWindow
 
     Private ReadOnly AllTerminals As ArrayList
     Private ReadOnly DepartureMode As Boolean
-    Private ReadOnly FooterFile As String
 
-    Public Sub New(Filename As String, Departuremode As Boolean, FooterFile As String)
+    Public Sub New(Filename As String, Departuremode As Boolean)
         Me.DepartureMode = Departuremode
-        Me.FooterFile = FooterFile
 
         'handles FileNotFound
         If Not File.Exists(Filename) Then
@@ -121,10 +119,7 @@ Public Class FlightWindow
 
                 'Handles when we run out of space
                 If linecounter = 23 Then
-                    Sleep(20000)
-
-                    'Run the footer
-                    Run(FooterFile)
+                    ABSleep(20000)
 
                     'Reset the linecounter
                     linecounter = 5
@@ -190,8 +185,7 @@ Public Class FlightWindow
             End While
 
             'Sleep then move on to the next terminal
-            Sleep(20000)
-            Run(FooterFile)
+            ABSleep(20000)
         Next
 
 

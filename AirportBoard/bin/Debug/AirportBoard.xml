@@ -43,6 +43,14 @@ AirportBoard
 <member name="M:AirportBoard.NewsWindow.Render">
  <summary>Renders a NewsWindow</summary>
 </member>
+<member name="M:AirportBoard.Ticker.GetTicker(System.Int32)">
+ <summary>
+ 
+ Gets a ticker string of specified length<br></br>
+ Also increments currentpos by 1
+ 
+ </summary>
+</member>
 <member name="M:AirportBoard.BasicRender.Block(System.ConsoleColor,System.Int32,System.Int32)">
  <summary>
  Renders a colored block of whatever color you choose
@@ -240,6 +248,16 @@ AirportBoard
 </member>
 <member name="M:AirportBoard.Main.Run(System.String)">
  <summary>Run an ABScript file</summary>
+</member>
+<member name="M:AirportBoard.Main.Run(System.String[])">
+ <summary>Run an array of ABScript Commands</summary>
+</member>
+<member name="M:AirportBoard.Main.ABSleep(System.Int32)">
+ <summary>Sleep call for AirportBoard. Keeps any elements that need to tick ticking</summary>
+ <param name="time"></param>
+</member>
+<member name="M:AirportBoard.Main.RenderTicker(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32,System.Int32)">
+ <summary>Renders the ticker</summary>
 </member>
 <member name="M:AirportBoard.Main.Clock(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32)">
  <summary>Renders the current time to screen</summary>

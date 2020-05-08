@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="AirportBoardElements\FlightWindow.vb" />
     <Compile Include="AirportBoardElements\NewsWindow.vb" />
+    <Compile Include="AirportBoardElements\Ticker.vb" />
     <Compile Include="AirportBoardElements\WeatherWindow.vb" />
     <Compile Include="BasicRender.vb" />
     <Compile Include="Main.vb" />

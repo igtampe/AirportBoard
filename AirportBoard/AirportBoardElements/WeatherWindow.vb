@@ -77,7 +77,7 @@ Public Class WeatherWindow
 
                 If CurrentColumn > Length Then
                     'we're out of space, wait, then reset it
-                    Sleep(10000)
+                    ABSleep(10000)
                     Box(ConsoleColor.Gray, (Length) * 30, (Height) * 5 + (Height), Leftpos, Toppos)
                     CurrentColumn = 1
                 End If
@@ -85,7 +85,7 @@ Public Class WeatherWindow
             End If
         Next
 
-        Sleep(10000)
+        ABSleep(10000)
 
     End Sub
 

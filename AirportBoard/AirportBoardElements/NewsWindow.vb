@@ -13,11 +13,9 @@ Public Class NewsWindow
     End Structure
 
     Private ReadOnly AllNews As ArrayList
-    Private ReadOnly FooterFile As String
 
-    Public Sub New(Filename As String, FooterFile As String)
 
-        Me.FooterFile = FooterFile
+    Public Sub New(Filename As String)
 
         If Not File.Exists(Filename) Then
             Sprite("[ ERROR ]", ConsoleColor.Red, ConsoleColor.Black)
@@ -72,9 +70,8 @@ Public Class NewsWindow
             If Item.Lines.Count + currentLine > 23 Then
                 'We're out of space, wait, then redraw the box that holds news
                 currentLine = 4
-                Sleep(30000)
+                ABSleep(30000)
 
-                Run(FooterFile)
                 Box(ConsoleColor.DarkRed, 80, 20, 0, 4)
             End If
 
@@ -98,7 +95,7 @@ Public Class NewsWindow
         Next
 
         'Last sleep to make sure people can read the last items
-        Sleep(30000)
+        ABSleep(30000)
 
     End Sub
 

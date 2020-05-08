@@ -1,5 +1,5 @@
 Color 3F
-run footer.ab
+'run footer.ab
 Run header.ab
 text~Weather~0F~0~0
 
