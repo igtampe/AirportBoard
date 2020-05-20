@@ -75,6 +75,7 @@
     <Compile Include="AirportBoardElements\WeatherWindow.vb" />
     <Compile Include="BasicRender.vb" />
     <Compile Include="LandingPageElements\LandingPageOption.vb" />
+    <Compile Include="LandingPageElements\WeatherPage.vb" />
     <Compile Include="Main.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
