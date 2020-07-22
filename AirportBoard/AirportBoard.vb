@@ -11,6 +11,9 @@ Public Class AirportBoard
     Public CurrentLine As Integer
     Public CurrentPage As Integer
 
+    ''' <summary>Holds the current page</summary>
+    Public CurrentPageContents As String()
+
     Public TickAB As String()
     Public Tickable As Boolean = False
 
@@ -60,6 +63,7 @@ Public Class AirportBoard
         End If
 
         CurrentPage = 0
+        PreFirstPage()
 
         Do
             Try
@@ -77,8 +81,13 @@ Public Class AirportBoard
 
     End Sub
 
+    Public Overridable Sub PreFirstPage()
+        'nothing
+    End Sub
+
+
     ''' <summary>Returns the contents of a file as an array</summary>
-    Public Function GetFileContents(File As String) As String()
+    Public Shared Function GetFileContents(File As String) As String()
         FileOpen(1, File, OpenMode.Input)
         Dim PageContents() As String
         Dim I As Integer = 0
@@ -94,11 +103,12 @@ Public Class AirportBoard
     ''' <summary>Run an ABScript file</summary>
     Public Sub Run(File As String)
         'Get page contents and run the page contents
-        Run(GetFileContents(File))
+        CurrentPageContents = GetFileContents(File)
+        Run(CurrentPageContents)
     End Sub
 
     ''' <summary>Run an array of ABScript Commands</summary>
-    Private Sub Run(PageContents() As String, Optional maxline As Integer = -1)
+    Protected Sub Run(PageContents() As String, Optional maxline As Integer = -1)
 
         CurrentLine = -1
 

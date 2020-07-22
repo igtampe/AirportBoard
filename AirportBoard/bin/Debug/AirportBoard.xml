@@ -63,6 +63,9 @@ AirportBoard
  <summary>Currentline *should* probably be a variable set only in Run, but it makes it harder to access it for the surrounding try-catch so that users can debug their own ABScript files. 
  So we need to keep this here. </summary>
 </member>
+<member name="F:AirportBoard.AirportBoard.CurrentPageContents">
+ <summary>Holds the current page</summary>
+</member>
 <member name="M:AirportBoard.AirportBoard.GetFileContents(System.String)">
  <summary>Returns the contents of a file as an array</summary>
 </member>

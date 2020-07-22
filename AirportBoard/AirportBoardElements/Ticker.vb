@@ -3,7 +3,7 @@
 Public Class Ticker
 
     Private CurrentPos As Integer
-    Private TickerString As String
+    Private ReadOnly TickerString As String
 
     Public Sub New(TickerFile As String)
         If Not File.Exists(TickerFile) Then

@@ -5,7 +5,7 @@ Imports Igtampe.BasicRender.RenderUtils
 
 Public Class WeatherWindow
 
-    Public Structure WeatherWindowItem
+    Private Structure WeatherWindowItem
         Public ReadOnly Line1 As String
         Public ReadOnly Line2 As String
         Public ReadOnly Icon As String

@@ -21,11 +21,7 @@ Module Main
         Mainboard.AllParsers.Add(New CoreParser(Mainboard))
         Mainboard.AllParsers.Add(New AirportElementParser(Mainboard))
 
-        Dim Args() As String = Environment.GetCommandLineArgs()
-
-
-        Mainboard.Execute(Args)
-
+        Mainboard.Execute(Environment.GetCommandLineArgs())
     End Sub
 
 End Module

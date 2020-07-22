@@ -1,4 +1,6 @@
-﻿Public Class LandingPadElementParser
+﻿Imports AirportBoard
+
+Public Class LandingPadElementParser
     Implements IABParser
 
     Public Function Parse(Line As String) As Boolean Implements IABParser.Parse
@@ -11,4 +13,5 @@
 
 
     End Function
+
 End Class

@@ -78,7 +78,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IABParser.vb" />
     <Compile Include="LandingPad.vb" />
     <Compile Include="LandingPageElements\WeatherInformation.vb" />
     <Compile Include="LandingPageElements\LandingPadElementParser.vb" />
@@ -120,7 +119,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <None Include="Resources\Doot.df" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AirportBoard\AirportBoard.vbproj">

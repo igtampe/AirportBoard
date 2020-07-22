@@ -5,7 +5,7 @@ Imports Igtampe.BasicRender.RenderUtils
 Public Class CoreParser
     Implements IABParser
 
-    Private MainBoard As AirportBoard
+    Private ReadOnly MainBoard As AirportBoard
 
     Public Sub New(ByRef MainBoard As AirportBoard)
         Me.MainBoard = MainBoard
@@ -56,9 +56,12 @@ Public Class CoreParser
         ElseIf UpperLine.StartsWith("RUN") Then
             'Run another ABScript file (RUN Page0.AB)
             Temp = UpperLine.Replace("RUN ", "")
+
             Dim oldcurrentline As Integer = MainBoard.CurrentLine
+            Dim oldcurrentpage As String() = MainBoard.CurrentPageContents
             MainBoard.Run(Temp)
             MainBoard.CurrentLine = oldcurrentline
+            MainBoard.CurrentPageContents = oldcurrentpage
             Return True
 
         ElseIf UpperLine.StartsWith("SLEEP") Then
