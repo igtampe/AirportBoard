@@ -47,7 +47,19 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BasicGraphics">
+      <HintPath>A:\Downloads\Programs\TestPrograms\BasicGraphics.dll</HintPath>
+    </Reference>
+    <Reference Include="BasicRender">
+      <HintPath>A:\Downloads\Programs\TestPrograms\BasicRender.dll</HintPath>
+    </Reference>
+    <Reference Include="BasicWindows">
+      <HintPath>A:\Downloads\Programs\TestPrograms\BasicWindows.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -69,16 +81,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AirportBoardElements\AirportElementParser.vb" />
-    <Compile Include="AirportBoardElements\FlightWindow.vb" />
-    <Compile Include="AirportBoardElements\NewsWindow.vb" />
-    <Compile Include="AirportBoardElements\Ticker.vb" />
-    <Compile Include="AirportBoardElements\WeatherWindow.vb" />
-    <Compile Include="BasicRender.vb" />
-    <Compile Include="IABParser.vb" />
+    <Compile Include="LandingPad.vb" />
     <Compile Include="LandingPageElements\WeatherInformation.vb" />
     <Compile Include="LandingPageElements\LandingPadElementParser.vb" />
-    <Compile Include="LandingPageElements\LandingPageOption.vb" />
+    <Compile Include="LandingPageElements\LandingPadOption.vb" />
     <Compile Include="LandingPageElements\WeatherPage.vb" />
     <Compile Include="Main.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -106,6 +112,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -116,6 +123,12 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AirportBoard\AirportBoard.vbproj">
+      <Project>{2792234b-3ce8-40c1-a945-8448b309cf38}</Project>
+      <Name>AirportBoard</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

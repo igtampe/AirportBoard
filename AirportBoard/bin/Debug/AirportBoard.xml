@@ -22,8 +22,23 @@ AirportBoard
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:AirportBoard.My.Resources.Resources.Doot">
+<summary>
+  Looks up a localized resource of type System.Byte[].
+</summary>
+</member>
+<member name="T:AirportBoard.AirportElementParser">
+ <summary>Holds the parsers for WeatherWindow, NewsWindow, and FlightWindow </summary>
+</member>
+<member name="F:AirportBoard.AirportElementParser.MainBoard">
+ <summary>MainBoard that will be used to ABSleep</summary>
+</member>
+<member name="M:AirportBoard.AirportElementParser.#ctor(AirportBoard.AirportBoard@)">
+ <summary>Creates a new Airport Element Parser</summary>
+ <param name="MainBoard">Mainboard that will be used to ABSleep</param>
+</member>
 <member name="T:AirportBoard.FlightWindow">
- <summary>Holds and renders a flightwindow</summary>
+ <summary>Displays a table of flights for several terminals</summary>
 </member>
 <member name="T:AirportBoard.FlightWindow.Flight">
  <summary>Holds a flight</summary>
@@ -31,245 +46,134 @@ AirportBoard
 <member name="T:AirportBoard.FlightWindow.Terminal">
  <summary>Holds a terminal with a collection of flights</summary>
 </member>
+<member name="F:AirportBoard.FlightWindow.AllTerminals">
+ <summary>All terminals held by this FlightWindow</summary>
+</member>
+<member name="F:AirportBoard.FlightWindow.IsDepartures">
+ <summary>Indicates whether this window is for departures or not</summary>
+</member>
 <member name="M:AirportBoard.FlightWindow.DrawTable">
  <summary>Draws the FlightWindow table</summary>
 </member>
-<member name="M:AirportBoard.FlightWindow.Render">
- <summary>Renders the flightwindow</summary>
+<member name="M:AirportBoard.FlightWindow.Render(AirportBoard.AirportBoard@)">
+ <summary>Renders the FlightWindow</summary>
+ <param name="Board">Board for ABSleep</param>
 </member>
 <member name="T:AirportBoard.NewsWindow">
- <summary>Holds and renders a NewsWindow</summary>
+ <summary>Displays News Informationon the whole window</summary>
 </member>
-<member name="M:AirportBoard.NewsWindow.Render">
- <summary>Renders a NewsWindow</summary>
+<member name="T:AirportBoard.NewsWindow.NewsItem">
+ <summary>Holds a news item (It's header and its lines</summary>
+</member>
+<member name="F:AirportBoard.NewsWindow.AllNews">
+ <summary>All the news in this NewsWindow</summary>
+</member>
+<member name="M:AirportBoard.NewsWindow.Render(AirportBoard.AirportBoard@)">
+ <summary>Renders this NewsWindow</summary>
+ <param name="Board">Board that will be used for ABSleep</param>
+</member>
+<member name="T:AirportBoard.Ticker">
+ <summary>Holds and prepares text for scrolling ticker text</summary>
 </member>
 <member name="M:AirportBoard.Ticker.GetTicker(System.Int32)">
  <summary>
- 
  Gets a ticker string of specified length<br></br>
  Also increments currentpos by 1
- 
  </summary>
 </member>
-<member name="M:AirportBoard.BasicRender.Block(System.ConsoleColor,System.Int32,System.Int32)">
- <summary>
- Renders a colored block of whatever color you choose
- </summary>
- <param name="Blockcolor">
- Color of the row of blocks
- </param>
- <param name="Leftpos">
- Position of the sprite leftwise (Starts at 0, must include TOPPOS)
- </param>
- <param name="TopPos">
- Position of the sprite topwise (Starts at 0, must include LEFTPOS)
- </param>
+<member name="T:AirportBoard.WeatherWindow">
+ <summary>Displays Weather information in a table for up to 6 places at a time</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.Sprite(System.String,System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32)">
- <summary>
- Renders a colored sprite of whatever color you choose
- </summary>
- <param name="Sprite">
- Character of the Sprite
- </param>
- <param name="Background">
- Background color of the sprite
- </param>
- <param name="Foreground">
- Foreground color of the sprite
- </param>
- <param name="Leftpos">
- Position of the sprite leftwise (Starts at 0, must include TOPPOS)
- </param>
- <param name="TopPos">
- Position of the sprite topwise (Starts at 0, must include LEFTPOS)
- </param>
+<member name="T:AirportBoard.WeatherWindow.WeatherWindowItem">
+ <summary>Weather Item</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.Box(System.ConsoleColor,System.Int32,System.Int32,System.Int32,System.Int32)">
- <summary>
- Renders a box on the screen
- </summary>
- <param name="color">Color of the Box</param>
- <param name="length">Length dimension of the box</param>
- <param name="height">Height dimension of the box</param>
- <param name="leftpos">Leftmost position of the box</param>
- <param name="toppos">Top most coordinate of the box</param>
+<member name="F:AirportBoard.AirportBoard.AllParsers">
+ <summary>All the available parsers to this board</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.Row(System.ConsoleColor,System.Int32,System.Int32,System.Int32)">
- <summary>
- Renders a colored row of blocks of whatever color you choose
- </summary>
- <param name="Length">
- Length of the row
- </param>
- <param name="Rowcolor">
- Color of the row of blocks
- </param>
- <param name="Leftpos">
- Position of the sprite leftwise (Starts at 0, must include TOPPOS)
- </param>
- <param name="TopPos">
- Position of the sprite topwise (Starts at 0, must include LEFTPOS)
- </param>
+<member name="F:AirportBoard.AirportBoard.CurrentLine">
+ <summary>Currentline *should* probably be a variable set only in Run, but it makes it harder to access it for the surrounding try-catch so that users can debug their own ABScript files. 
+ So we need to keep this here. </summary>
 </member>
-<member name="M:AirportBoard.BasicRender.ClearLine(System.Int32,System.ConsoleColor)">
- <summary>
- Clears a line
- </summary>
- <param name="Line">
- Line that you're clearing (Line 0 is the top line)
- </param>
- <param name="BackgroundColor">
- In the event that the background isn't black, you can set it to be whatever color you want.
- </param>
+<member name="F:AirportBoard.AirportBoard.CurrentPage">
+ <summary>Current page number</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.CenterText(System.String)">
- <summary>
- Centers Text
- </summary>
- <param name="Text">Text you wish to be centered</param>
+<member name="F:AirportBoard.AirportBoard.CurrentPageContents">
+ <summary>Current Page Contents (Used to resume execution in the event of a break)</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.Window(System.String,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Int32,System.Int32)">
- <summary>
- Render a window on screen
- </summary>
- <param name="Title">Title of the Window</param>
- <param name="length">Length dimension of the window</param>
- <param name="height">Height dimension of the window</param>
- <param name="leftpos">Leftmost position (Centered by default)</param>
- <param name="toppos">Topmost position (Centered by default)</param>
+<member name="F:AirportBoard.AirportBoard.TickAB">
+ <summary>Tick ABScript that's held in memory</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.RemoveWindow(System.Int32,System.Int32,System.Boolean,System.Int32,System.Int32)">
- <summary>
- Clears a window
- </summary>
- <param name="length">Length dimension of the window</param>
- <param name="height">Height dimension of the window</param>
- <param name="leftpos">Leftmost position (Centered by default)</param>
- <param name="toppos">Topmost position (Centered by default)</param>
+<member name="F:AirportBoard.AirportBoard.Tickable">
+ <summary>Indicates whether this board is tickable</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.DialogBox(System.String,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Int32,System.Int32)">
- <summary>
- Renders and handles an ITOS Dialog Box
- </summary>
- <param name="text">Text of the dialog box</param>
- <param name="Icon">Icon: 1 = Information, 2 = Exclamation, 3 = critical, 4 = question </param>
- <param name="Options">Options: 1= OK, 2= OK, Cancel, 3=Yes, No</param>
- <param name="shadow">Does the window need a shaddow?</param>
- <param name="animated">Is this window animated?</param>
- <param name="leftpos">Left position of the box</param>
- <param name="toppos">right position of the box</param>
- <returns></returns>
+<member name="F:AirportBoard.AirportBoard.BoardTicker">
+ <summary>Optionally loadable ticker text</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.Sleep(System.Int32)">
- <summary>
- Sleep for a specified amount of miliseconds
- </summary>
+<member name="M:AirportBoard.AirportBoard.Execute(System.String[])">
+ <summary>Executes the board</summary>
+ <param name="Args">Args from the console. Used if you need to pass/render a preview AB or DF file</param>
 </member>
-<member name="M:AirportBoard.BasicRender.SetPos(System.Int32,System.Int32)">
- <summary>
- Sets the position of the cursor to whatever you want.
- </summary>
+<member name="M:AirportBoard.AirportBoard.PreFirstPage">
+ <summary>Runs before executing Page0 for the first time</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.Pause">
- <summary>
- Press a key to continue
- </summary>
+<member name="M:AirportBoard.AirportBoard.GetFileContents(System.String)">
+ <summary>Returns the contents of a file as an array</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.Color(System.ConsoleColor)">
- <summary>
- Sets the color of the console text
- </summary>
- <param name="FG"></param>
+<member name="M:AirportBoard.AirportBoard.Run(System.String)">
+ <summary>Run an ABScript file</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.Color(System.ConsoleColor,System.ConsoleColor)">
- <summary>
- Change the color
- </summary>
- <param name="background"></param>
- <param name="Foreground"></param>
+<member name="M:AirportBoard.AirportBoard.Run(System.String[],System.Int32)">
+ <summary>Run an array of ABScript Commands</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.OnWindow(System.Int32,System.Int32,System.Int32)">
- <summary>
- Converts coordinates to be on a centered window
- </summary>
- <param name="Dimension">Pertinent dimension of the window</param>
- <param name="Reference">Dimension with reference to the window</param>
- <param name="resulttype">0: Width or 1: Height</param>
- <returns></returns>
+<member name="M:AirportBoard.AirportBoard.ABSleep(System.Int32)">
+ <summary>Sleep call for AirportBoard. Keeps any elements that need to tick ticking, and checks for pressed keys to process</summary>
+ <param name="time">Time in Milliseconds</param>
 </member>
-<member name="M:AirportBoard.BasicRender.Draw(System.String)">
- <summary>
- Draw allows you to use a string of characters to "Draw" on screen.<br></br>
- <br></br>
-0 = Black       8 = Gray<br></br>
-1 = Blue        9 = Light Blue<br></br>
-2 = Green       A = Light Green<br></br>
-3 = Aqua        B = Light Aqua<br></br>
-4 = Red         C = Light Red<br></br>
-5 = Purple      D = Light Purple<br></br>
-6 = Yellow      E = Light Yellow<br></br>
-7 = White       F = Bright White<br></br>
- <br></br>
- </summary>
- <param name="ColorString"></param>
+<member name="M:AirportBoard.AirportBoard.ProcessKeyInput(System.ConsoleKeyInfo)">
+ <summary>Processes Key Inputs</summary>
+ <param name="pressedkey">The key that was pressed</param>
+ <returns>Returns true if the board should stop sleeping</returns>
 </member>
-<member name="M:AirportBoard.BasicRender.Echo(System.String,System.Boolean)">
- <summary>
- Displays a message
- </summary>
- <param name="Message">The message you wish to display, dumb dumb</param>
- <param name="LineBreak">Wether or not to put a linebreak</param>
+<member name="T:AirportBoard.CoreParser">
+ <summary>Parser that holds core commands for AirportBoard</summary>
 </member>
-<member name="M:AirportBoard.BasicRender.WriteToWindow(System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
- <summary>
- Write text to a window
- </summary>
- <param name="Text">The text to be put on the window</param>
- <param name="Length">Length of the window</param>
- <param name="height">Height of the window</param>
- <param name="leftpos">Leftpos in reference to the window</param>
- <param name="toppos">Toppos in reference to the window</param>
+<member name="M:AirportBoard.CoreParser.ScreenTest">
+ <summary>Tests the screen by running a few of the BasicRender commands</summary>
+</member>
+<member name="M:AirportBoard.CoreParser.Clock(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32)">
+ <summary>Renders the current time to screen</summary>
+</member>
+<member name="M:AirportBoard.CoreParser.DateRender(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32)">
+ <summary>Renders the current date to screen</summary>
+</member>
+<member name="M:AirportBoard.CoreParser.RenderTicker(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32,System.Int32)">
+ <summary>Renders the ticker</summary>
+</member>
+<member name="T:AirportBoard.IABParser">
+ <summary>Interface that holds a parser for ABScript</summary>
+</member>
+<member name="M:AirportBoard.IABParser.Parse(System.String)">
+ <summary>Parses a line of an ABScript file</summary>
+ <param name="Line">A line of an ABScript file</param>
+ <returns>True if it could parse it, false otherwise</returns>
 </member>
 <member name="T:AirportBoard.Main">
  <summary>Holds the main processes of AirportBoard</summary>
 </member>
 <member name="M:AirportBoard.Main.Main">
- <summary>Starts the AirportBoard</summary>
+ <summary>Creates and starts the AirportBoard</summary>
 </member>
-<member name="M:AirportBoard.Main.ScreenTest">
- <summary>Tests screen to show all of what AirportBoard can do</summary>
+<member name="T:AirportBoard.GuruMeditationError">
+ <summary>Holds some error handling functions</summary>
 </member>
-<member name="M:AirportBoard.Main.MainMenu">
- <summary>Handles the main operations</summary>
-</member>
-<member name="M:AirportBoard.Main.GetFileContents(System.String)">
- <summary>Returns the contents of a file as an array</summary>
-</member>
-<member name="M:AirportBoard.Main.Run(System.String)">
- <summary>Run an ABScript file</summary>
-</member>
-<member name="M:AirportBoard.Main.Run(System.String[])">
- <summary>Run an array of ABScript Commands</summary>
-</member>
-<member name="M:AirportBoard.Main.ABSleep(System.Int32)">
- <summary>Sleep call for AirportBoard. Keeps any elements that need to tick ticking</summary>
- <param name="time"></param>
-</member>
-<member name="M:AirportBoard.Main.RenderTicker(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32,System.Int32)">
- <summary>Renders the ticker</summary>
-</member>
-<member name="M:AirportBoard.Main.Clock(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32)">
- <summary>Renders the current time to screen</summary>
-</member>
-<member name="M:AirportBoard.Main.DateRender(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32)">
- <summary>Renders the current date to screen</summary>
-</member>
-<member name="M:AirportBoard.Main.LoadErrorPage(System.Exception,System.Int32)">
+<member name="M:AirportBoard.GuruMeditationError.LoadErrorPage(System.Exception,System.Int32,System.Int32)">
  <summary>Shows a Guru Meditation Error after saving the error's stacktrace to disk</summary>
 </member>
-<member name="M:AirportBoard.Main.GuruMeditationError(System.String,System.String,System.String,System.String)">
+<member name="M:AirportBoard.GuruMeditationError.RenderGuruMeditationError(System.String,System.String,System.String,System.String)">
  <summary>Shows a guru meditation error</summary>
+</member>
+<member name="T:AirportBoard.ErrorWindow">
+ <summary>A very simple Window that displays an error message, with a maximum of 3 lines</summary>
 </member>
 </members>
 </doc>

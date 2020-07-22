@@ -1,4 +1,6 @@
-﻿Public Interface IABParser
+﻿
+''' <summary>Interface that holds a parser for ABScript</summary>
+Public Interface IABParser
 
     ''' <summary>Parses a line of an ABScript file</summary>
     ''' <param name="Line">A line of an ABScript file</param>

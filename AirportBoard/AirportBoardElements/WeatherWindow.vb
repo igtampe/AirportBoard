@@ -1,8 +1,15 @@
 ﻿Imports System.IO
+Imports Igtampe.BasicGraphics
+Imports Igtampe.BasicRender.Draw
+Imports Igtampe.BasicRender.RenderUtils
 
+''' <summary>Displays Weather information in a table for up to 6 places at a time</summary>
 Public Class WeatherWindow
 
-    Public Structure WeatherWindowItem
+    '------------------------------------[Structures]------------------------------------
+
+    ''' <summary>Weather Item</summary>
+    Private Structure WeatherWindowItem
         Public ReadOnly Line1 As String
         Public ReadOnly Line2 As String
         Public ReadOnly Icon As String
@@ -45,7 +52,7 @@ Public Class WeatherWindow
         FileClose(1)
     End Sub
 
-    Public Sub Render()
+    Public Sub Render(ByRef Board As AirportBoard)
 
         Dim CurrentRow As Integer
         Dim CurrentColumn As Integer
@@ -55,7 +62,7 @@ Public Class WeatherWindow
 
         Catch
             SetPos(0, 0)
-            Echo("Hubo un problemita." & vbNewLine & vbNewLine & "LENGTH: " & length & vbNewLine & "HEIGHT: " & height & vbNewLine & "CurrentColumn: " & CurrentColumn & vbNewLine & "CurrentRow: " & CurrentRow)
+            Echo("Hubo un problemita." & vbNewLine & vbNewLine & "LENGTH: " & Length & vbNewLine & "HEIGHT: " & Height & vbNewLine & "CurrentColumn: " & CurrentColumn & vbNewLine & "CurrentRow: " & CurrentRow)
             Pause()
         End Try
 
@@ -65,7 +72,8 @@ Public Class WeatherWindow
 
         For Each CurrentItem As WeatherWindowItem In WeatherWindowItems
 
-            DrawFromFile(CurrentItem.Icon, Leftpos + (30 * (CurrentColumn - 1)), Toppos + (6 * (CurrentRow - 1)))
+            Dim Icon As Graphic = New BasicGraphicFromFile(CurrentItem.Icon)
+            Icon.Draw(Leftpos + (30 * (CurrentColumn - 1)), Toppos + (6 * (CurrentRow - 1)))
             Sprite(CurrentItem.Line1, ConsoleColor.Gray, ConsoleColor.Black, Leftpos + (30 * (CurrentColumn - 1)) + 13, Toppos + (5 * (CurrentRow - 1)) + 1 + (1 * (CurrentRow - 1)))
             Sprite(CurrentItem.Line2, ConsoleColor.Gray, ConsoleColor.Black, Leftpos + (30 * (CurrentColumn - 1)) + 13, Toppos + (5 * (CurrentRow - 1)) + 2 + (1 * (CurrentRow - 1)))
 
@@ -77,7 +85,7 @@ Public Class WeatherWindow
 
                 If CurrentColumn > Length Then
                     'we're out of space, wait, then reset it
-                    ABSleep(10000)
+                    Board.ABSleep(10000)
                     Box(ConsoleColor.Gray, (Length) * 30, (Height) * 5 + (Height), Leftpos, Toppos)
                     CurrentColumn = 1
                 End If
@@ -85,7 +93,7 @@ Public Class WeatherWindow
             End If
         Next
 
-        ABSleep(10000)
+        Board.ABSleep(10000)
 
     End Sub
 

@@ -1,7 +1,13 @@
 ﻿Imports System.IO
-''' <summary>Holds and renders a NewsWindow</summary>
+Imports Igtampe.BasicRender.Draw
+Imports Igtampe.BasicRender.RenderUtils
+
+''' <summary>Displays News Informationon the whole window</summary>
 Public Class NewsWindow
 
+    '------------------------------------[Structures]------------------------------------
+
+    ''' <summary>Holds a news item (It's header and its lines</summary>
     Private Structure NewsItem
         Public ReadOnly Header As String
         Public ReadOnly Lines As ArrayList
@@ -12,11 +18,16 @@ Public Class NewsWindow
         End Sub
     End Structure
 
+    '------------------------------------[Variables/Properties]------------------------------------
+
+    ''' <summary>All the news in this NewsWindow</summary>
     Private ReadOnly AllNews As ArrayList
 
+    '------------------------------------[Constructors]------------------------------------
 
     Public Sub New(Filename As String)
 
+        'Handles File doesn't exist
         If Not File.Exists(Filename) Then
             Sprite("[ ERROR ]", ConsoleColor.Red, ConsoleColor.Black)
             Sprite(" File " & Filename & " was not found.", ConsoleColor.Black, ConsoleColor.Red)
@@ -59,8 +70,11 @@ Public Class NewsWindow
 
     End Sub
 
-    ''' <summary>Renders a NewsWindow</summary>
-    Public Sub Render()
+    '------------------------------------[Functions]------------------------------------
+
+    ''' <summary>Renders this NewsWindow</summary>
+    ''' <param name="Board">Board that will be used for ABSleep</param>
+    Public Sub Render(ByRef Board As AirportBoard)
         Box(ConsoleColor.DarkRed, 80, 20, 0, 4)
 
         Dim currentLine As Integer = 4
@@ -70,7 +84,7 @@ Public Class NewsWindow
             If Item.Lines.Count + currentLine > 23 Then
                 'We're out of space, wait, then redraw the box that holds news
                 currentLine = 4
-                ABSleep(30000)
+                Board.ABSleep(30000)
 
                 Box(ConsoleColor.DarkRed, 80, 20, 0, 4)
             End If
@@ -95,7 +109,7 @@ Public Class NewsWindow
         Next
 
         'Last sleep to make sure people can read the last items
-        ABSleep(30000)
+        Board.ABSleep(30000)
 
     End Sub
 
