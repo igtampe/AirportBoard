@@ -17,7 +17,7 @@ Module Main
         Console.SetWindowSize(80, 24)
         Console.SetBufferSize(80, 24)
         Console.Clear()
-        Console.Title = "LandingPad [Version 1.0] (Based on AirportBoard [Version 3.0])"
+        Console.Title = "LandingPad [Version 2.0] (Based on AirportBoard [Version 3.0])"
 
         'LandingPad is a little smaller, as the SSH window we have is just one line smaller
         'I didn't realize that when I made AirportBoard. Oopsie.

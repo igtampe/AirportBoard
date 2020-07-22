@@ -123,7 +123,7 @@ Public Class LandingPad
         HiColorGraphic.HiColorDraw("090-091-092-992-120-9A1-9A2-AA2-AB0-AB1-AB2-BB0-BC0-BC1-BC2-CC0-CD0-CD1-CD2-DD0-DE0-DE1-DE2-EE0-EF0-EF1-EF2-FF0-F70-F71-F72-770-700-701-702-000")
 
         SetPos(0, 21)
-        CenterText("Based on Airportboard 2.0")
+        CenterText("Based on AirportBoard 3.0")
 
         SetPos(0, 22)
         CenterText("A program by Igtampe, 2020")
