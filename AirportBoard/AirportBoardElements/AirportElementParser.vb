@@ -2,11 +2,20 @@
 Public Class AirportElementParser
     Implements IABParser
 
+    '------------------------------------[Variables/Properties]------------------------------------
+
+    ''' <summary>MainBoard that will be used to ABSleep</summary>
     Private MainBoard As AirportBoard
 
+    '------------------------------------[Constructor]------------------------------------
+
+    ''' <summary>Creates a new Airport Element Parser</summary>
+    ''' <param name="MainBoard">Mainboard that will be used to ABSleep</param>
     Public Sub New(ByRef MainBoard As AirportBoard)
         Me.MainBoard = MainBoard
     End Sub
+
+    '------------------------------------[Functions]------------------------------------
 
     Public Function Parse(Line As String) As Boolean Implements IABParser.Parse
 

@@ -3,8 +3,12 @@ Imports Igtampe.BasicGraphics
 Imports Igtampe.BasicRender.Draw
 Imports Igtampe.BasicRender.RenderUtils
 
+''' <summary>Displays Weather information in a table for up to 6 places at a time</summary>
 Public Class WeatherWindow
 
+    '------------------------------------[Structures]------------------------------------
+
+    ''' <summary>Weather Item</summary>
     Private Structure WeatherWindowItem
         Public ReadOnly Line1 As String
         Public ReadOnly Line2 As String

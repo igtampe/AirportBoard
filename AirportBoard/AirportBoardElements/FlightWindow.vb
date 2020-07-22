@@ -3,8 +3,10 @@ Imports Igtampe.BasicRender.Draw
 Imports Igtampe.BasicRender.RenderUtils
 Imports Igtampe.BasicGraphics
 
-''' <summary>Holds and renders a flightwindow</summary>
+''' <summary>Displays a table of flights for several terminals</summary>
 Public Class FlightWindow
+
+    '------------------------------------[Structures]------------------------------------
 
     ''' <summary>Holds a flight</summary>
     Private Structure Flight
@@ -39,11 +41,18 @@ Public Class FlightWindow
         End Sub
     End Structure
 
-    Private ReadOnly AllTerminals As ArrayList
-    Private ReadOnly DepartureMode As Boolean
+    '------------------------------------[Variables/Properties]------------------------------------
 
-    Public Sub New(Filename As String, Departuremode As Boolean)
-        Me.DepartureMode = Departuremode
+    ''' <summary>All terminals held by this FlightWindow</summary>
+    Private ReadOnly AllTerminals As ArrayList
+
+    ''' <summary>Indicates whether this window is for departures or not</summary>
+    Private ReadOnly IsDepartures As Boolean
+
+    '------------------------------------[Constructors]------------------------------------
+
+    Public Sub New(Filename As String, IsDepartures As Boolean)
+        Me.IsDepartures = IsDepartures
 
         'handles FileNotFound
         If Not File.Exists(Filename) Then
@@ -58,14 +67,15 @@ Public Class FlightWindow
         Dim CurrentTerminal As Terminal = New Terminal("?")
         AllTerminals = New ArrayList
 
+        'Loads Terminals
         While Not EOF(1)
             Dim Temp As String = LineInput(1)
             If Temp.StartsWith("-") Then
                 'new terminal
                 CurrentTerminal = New Terminal(Temp.Remove(0, 2))
                 AllTerminals.Add(CurrentTerminal)
-            End If
-            If Temp.StartsWith("~") Then
+            ElseIf Temp.StartsWith("~") Then
+                'New Flight
                 Dim TempSplit As String() = Temp.Remove(0, 1).Split("~")
                 Dim NewFlight As Flight = New Flight(TempSplit(0), TempSplit(1), TempSplit(2), TempSplit(3), TempSplit(4), TempSplit(5), TempSplit(6))
                 CurrentTerminal.Flights.Add(NewFlight)
@@ -76,6 +86,8 @@ Public Class FlightWindow
 
     End Sub
 
+    '------------------------------------[Functions]------------------------------------
+
     ''' <summary>Draws the FlightWindow table</summary>
     Private Sub DrawTable()
         Row(ConsoleColor.Black, 80, 0, 2)
@@ -84,7 +96,7 @@ Public Class FlightWindow
         'Table header
         SetPos(1, 4)
         Color(ConsoleColor.White, ConsoleColor.Black)
-        If DepartureMode Then
+        If IsDepartures Then
             Echo("--FLIGHT NUMBER--|-GATE-|---TIME---|--STATUS--|-DESTINATION-------------------".Replace("-", " "))
         Else
             Echo("--FLIGHT NUMBER--|-GATE-|---TIME---|--STATUS--|-ORIGIN------------------------".Replace("-", " "))
@@ -97,7 +109,8 @@ Public Class FlightWindow
     End Sub
 
 
-    ''' <summary>Renders the flightwindow</summary>
+    ''' <summary>Renders the FlightWindow</summary>
+    ''' <param name="Board">Board for ABSleep</param>
     Public Sub Render(ByRef Board As AirportBoard)
 
         If IsNothing(AllTerminals) Then Return
@@ -155,7 +168,7 @@ Public Class FlightWindow
                         StatusString = "CANCELED"
                         StatusColor = ConsoleColor.Red
                     Case 4
-                        If DepartureMode Then StatusString = "DEPARTED" Else StatusString = "ARRIVED"
+                        If IsDepartures Then StatusString = "DEPARTED" Else StatusString = "ARRIVED"
                         StatusColor = ConsoleColor.DarkBlue
                     Case Else
                         StatusString = "UNKNOWN"

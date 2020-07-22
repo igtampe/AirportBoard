@@ -1,9 +1,13 @@
 ﻿Imports System.IO
 Imports Igtampe.BasicRender.Draw
 Imports Igtampe.BasicRender.RenderUtils
-''' <summary>Holds and renders a NewsWindow</summary>
+
+''' <summary>Displays News Informationon the whole window</summary>
 Public Class NewsWindow
 
+    '------------------------------------[Structures]------------------------------------
+
+    ''' <summary>Holds a news item (It's header and its lines</summary>
     Private Structure NewsItem
         Public ReadOnly Header As String
         Public ReadOnly Lines As ArrayList
@@ -14,11 +18,16 @@ Public Class NewsWindow
         End Sub
     End Structure
 
+    '------------------------------------[Variables/Properties]------------------------------------
+
+    ''' <summary>All the news in this NewsWindow</summary>
     Private ReadOnly AllNews As ArrayList
 
+    '------------------------------------[Constructors]------------------------------------
 
     Public Sub New(Filename As String)
 
+        'Handles File doesn't exist
         If Not File.Exists(Filename) Then
             Sprite("[ ERROR ]", ConsoleColor.Red, ConsoleColor.Black)
             Sprite(" File " & Filename & " was not found.", ConsoleColor.Black, ConsoleColor.Red)
@@ -61,7 +70,10 @@ Public Class NewsWindow
 
     End Sub
 
-    ''' <summary>Renders a NewsWindow</summary>
+    '------------------------------------[Functions]------------------------------------
+
+    ''' <summary>Renders this NewsWindow</summary>
+    ''' <param name="Board">Board that will be used for ABSleep</param>
     Public Sub Render(ByRef Board As AirportBoard)
         Box(ConsoleColor.DarkRed, 80, 20, 0, 4)
 

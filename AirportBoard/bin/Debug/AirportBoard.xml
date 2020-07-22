@@ -30,8 +30,15 @@ AirportBoard
 <member name="T:AirportBoard.AirportElementParser">
  <summary>Holds the parsers for WeatherWindow, NewsWindow, and FlightWindow </summary>
 </member>
+<member name="F:AirportBoard.AirportElementParser.MainBoard">
+ <summary>MainBoard that will be used to ABSleep</summary>
+</member>
+<member name="M:AirportBoard.AirportElementParser.#ctor(AirportBoard.AirportBoard@)">
+ <summary>Creates a new Airport Element Parser</summary>
+ <param name="MainBoard">Mainboard that will be used to ABSleep</param>
+</member>
 <member name="T:AirportBoard.FlightWindow">
- <summary>Holds and renders a flightwindow</summary>
+ <summary>Displays a table of flights for several terminals</summary>
 </member>
 <member name="T:AirportBoard.FlightWindow.Flight">
  <summary>Holds a flight</summary>
@@ -39,25 +46,43 @@ AirportBoard
 <member name="T:AirportBoard.FlightWindow.Terminal">
  <summary>Holds a terminal with a collection of flights</summary>
 </member>
+<member name="F:AirportBoard.FlightWindow.AllTerminals">
+ <summary>All terminals held by this FlightWindow</summary>
+</member>
+<member name="F:AirportBoard.FlightWindow.IsDepartures">
+ <summary>Indicates whether this window is for departures or not</summary>
+</member>
 <member name="M:AirportBoard.FlightWindow.DrawTable">
  <summary>Draws the FlightWindow table</summary>
 </member>
 <member name="M:AirportBoard.FlightWindow.Render(AirportBoard.AirportBoard@)">
- <summary>Renders the flightwindow</summary>
+ <summary>Renders the FlightWindow</summary>
+ <param name="Board">Board for ABSleep</param>
 </member>
 <member name="T:AirportBoard.NewsWindow">
- <summary>Holds and renders a NewsWindow</summary>
+ <summary>Displays News Informationon the whole window</summary>
+</member>
+<member name="T:AirportBoard.NewsWindow.NewsItem">
+ <summary>Holds a news item (It's header and its lines</summary>
+</member>
+<member name="F:AirportBoard.NewsWindow.AllNews">
+ <summary>All the news in this NewsWindow</summary>
 </member>
 <member name="M:AirportBoard.NewsWindow.Render(AirportBoard.AirportBoard@)">
- <summary>Renders a NewsWindow</summary>
+ <summary>Renders this NewsWindow</summary>
+ <param name="Board">Board that will be used for ABSleep</param>
 </member>
 <member name="M:AirportBoard.Ticker.GetTicker(System.Int32)">
  <summary>
- 
  Gets a ticker string of specified length<br></br>
  Also increments currentpos by 1
- 
  </summary>
+</member>
+<member name="T:AirportBoard.WeatherWindow">
+ <summary>Displays Weather information in a table for up to 6 places at a time</summary>
+</member>
+<member name="T:AirportBoard.WeatherWindow.WeatherWindowItem">
+ <summary>Weather Item</summary>
 </member>
 <member name="F:AirportBoard.AirportBoard.CurrentLine">
  <summary>Currentline *should* probably be a variable set only in Run, but it makes it harder to access it for the surrounding try-catch so that users can debug their own ABScript files. 
@@ -104,6 +129,9 @@ AirportBoard
 </member>
 <member name="M:AirportBoard.GuruMeditationError.RenderGuruMeditationError(System.String,System.String,System.String,System.String)">
  <summary>Shows a guru meditation error</summary>
+</member>
+<member name="T:AirportBoard.ErrorWindow">
+ <summary>A very simple </summary>
 </member>
 </members>
 </doc>

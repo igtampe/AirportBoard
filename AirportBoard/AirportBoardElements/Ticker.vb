@@ -2,10 +2,16 @@
 
 Public Class Ticker
 
+    '------------------------------------[Variables/Properties]------------------------------------
+
     Private CurrentPos As Integer
     Private ReadOnly TickerString As String
 
+    '------------------------------------[Constructors]------------------------------------
+
     Public Sub New(TickerFile As String)
+
+        'Make sure the file exists
         If Not File.Exists(TickerFile) Then
             GuruMeditationError.RenderGuruMeditationError("Could not load TickerFile", TickerFile, "Does not exist!", "")
         End If
@@ -17,11 +23,11 @@ Public Class Ticker
         CurrentPos = 0
     End Sub
 
+    '------------------------------------[Functions]------------------------------------
+
     ''' <summary>
-    ''' 
     ''' Gets a ticker string of specified length<br></br>
     ''' Also increments currentpos by 1
-    ''' 
     ''' </summary>
     Public Function GetTicker(Length As Integer) As String
 
