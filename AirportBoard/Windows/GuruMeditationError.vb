@@ -1,9 +1,9 @@
 ﻿Imports Igtampe.BasicRender.Draw
 Imports Igtampe.BasicRender.RenderUtils
-Public Class GuruMeditationError
+Public Module GuruMeditationError
 
     ''' <summary>Shows a Guru Meditation Error after saving the error's stacktrace to disk</summary>
-    Public Shared Sub LoadErrorPage(ex As Exception, PageIndex As Integer, LineIndex As Integer)
+    Public Sub LoadErrorPage(ex As Exception, PageIndex As Integer, LineIndex As Integer)
 
         Try
             FileOpen(1, "ABErrors.txt", OpenMode.Append)
@@ -13,15 +13,15 @@ Public Class GuruMeditationError
             PrintLine(1, "=================================================================")
             FileClose(1)
         Catch ex2 As Exception
-            Render("There was an error saving the error", ex2.Message.Split(vbNewLine)(0), ex.Source, "I don't know how this could happen")
+            RenderGuruMeditationError("There was an error saving the error", ex2.Message.Split(vbNewLine)(0), ex.Source, "I don't know how this could happen")
         End Try
 
-        Render("Error at Page " & PageIndex & " Line " & LineIndex, ex.Message.Split(vbNewLine)(0), ex.Source, "The error was written to ABErrors.txt")
+        RenderGuruMeditationError("Error at Page " & PageIndex & " Line " & LineIndex, ex.Message.Split(vbNewLine)(0), ex.Source, "The error was written to ABErrors.txt")
 
     End Sub
 
     ''' <summary>Shows a guru meditation error</summary>
-    Public Shared Sub Render(Line1 As String, Line2 As String, Line3 As String, line4 As String)
+    Public Sub RenderGuruMeditationError(Line1 As String, Line2 As String, Line3 As String, line4 As String)
         '80x25
         Color(ConsoleColor.DarkGray, ConsoleColor.Red)
         Box(ConsoleColor.DarkGray, 50, 15, 15, 5)
@@ -46,4 +46,4 @@ Public Class GuruMeditationError
 
 
 
-End Class
+End Module

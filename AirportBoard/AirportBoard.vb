@@ -89,7 +89,7 @@ Public Class AirportBoard
     ''' <summary>Returns the contents of a file as an array</summary>
     Public Shared Function GetFileContents(File As String) As String()
         FileOpen(1, File, OpenMode.Input)
-        Dim PageContents() As String
+        Dim PageContents() As String = Nothing
         Dim I As Integer = 0
         While Not EOF(1)
             ReDim Preserve PageContents(I)
@@ -126,7 +126,7 @@ Public Class AirportBoard
             Next
 
             'If it's still not parsed, then it's unparsable
-            If Not Parsed Then GuruMeditationError.Render("Could not interpret line " & CurrentLine, Line.Split(" ")(0), "", "")
+            If Not Parsed Then GuruMeditationError.RenderGuruMeditationError("Could not interpret line " & CurrentLine, Line.Split(" ")(0), "", "")
 
             'This is used by re-render
             If Not maxline = -1 Then If CurrentLine = maxline Then Return

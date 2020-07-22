@@ -5,8 +5,8 @@ Public Class LandingPadElementParser
 
     Public Function Parse(Line As String) As Boolean Implements IABParser.Parse
 
-        Dim Upperline As String = Line.ToUpper
-        Dim CurrentCommand() As String
+        'Dim Upperline As String = Line.ToUpper
+        'Dim CurrentCommand() As String
 
         'This will eventually hold the real world weather page but for now no.
         Return False

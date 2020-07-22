@@ -102,7 +102,7 @@ AirportBoard
 <member name="M:AirportBoard.GuruMeditationError.LoadErrorPage(System.Exception,System.Int32,System.Int32)">
  <summary>Shows a Guru Meditation Error after saving the error's stacktrace to disk</summary>
 </member>
-<member name="M:AirportBoard.GuruMeditationError.Render(System.String,System.String,System.String,System.String)">
+<member name="M:AirportBoard.GuruMeditationError.RenderGuruMeditationError(System.String,System.String,System.String,System.String)">
  <summary>Shows a guru meditation error</summary>
 </member>
 </members>

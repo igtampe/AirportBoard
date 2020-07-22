@@ -7,7 +7,7 @@ Public Class Ticker
 
     Public Sub New(TickerFile As String)
         If Not File.Exists(TickerFile) Then
-            GuruMeditationError.Render("Could not load TickerFile", TickerFile, "Does not exist!", "")
+            GuruMeditationError.RenderGuruMeditationError("Could not load TickerFile", TickerFile, "Does not exist!", "")
         End If
 
         FileOpen(1, TickerFile, OpenMode.Input)

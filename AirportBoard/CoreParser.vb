@@ -168,7 +168,7 @@ Public Class CoreParser
     ''' <summary>Renders the ticker</summary>
     Public Sub RenderTicker(BackgroundColor As ConsoleColor, ForegroundColor As ConsoleColor, Length As Integer, leftpos As Integer, toppos As Integer)
         If IsNothing(MainBoard.BoardTicker) Then
-            GuruMeditationError.Render("Cannot run ticker, ticker not initialized!", "", "", "")
+            GuruMeditationError.RenderGuruMeditationError("Cannot run ticker, ticker not initialized!", "", "", "")
         Else
             Sprite(MainBoard.BoardTicker.GetTicker(Length), BackgroundColor, ForegroundColor, leftpos, toppos)
         End If

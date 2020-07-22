@@ -42,7 +42,7 @@ Public Class LandingPad
                     AllActions.Add(New LandingPageOption(Line.Split("~")(0), Line.Split("~")(1)))
                 Next
             Catch ex As Exception
-                GuruMeditationError.Render("An error occurred while processing your options", ex.Message, "", "")
+                GuruMeditationError.RenderGuruMeditationError("An error occurred while processing your options", ex.Message, "", "")
             End Try
 
         End If
@@ -93,7 +93,7 @@ Public Class LandingPad
                         Try
                             StartProcessInLine(Opt.Command)
                         Catch ex As Exception
-                            GuruMeditationError.Render("An error occurred while launching the process:", Opt.Command, ex.Message, "")
+                            GuruMeditationError.RenderGuruMeditationError("An error occurred while launching the process:", Opt.Command, ex.Message, "")
                         End Try
                         ReRender()
                         Return True
@@ -162,18 +162,15 @@ Public Class LandingPad
         Dim Pin As String = GetFileContents("ConsolePass.txt")(0)
 
         If Pin = pinattempt Then
-            Pin = ""
             Console.Clear()
             Color(ConsoleColor.Black, ConsoleColor.Gray)
             StartProcessInLine("CMD")
         End If
 
-        Pin = ""
-
     End Sub
 
     ''' <summary>Starts the specified process in line with this console</summary>
-    Public Sub StartProcessInLine(Command As String)
+    Public Shared Sub StartProcessInLine(Command As String)
         'Create a process and create its startinfo which needs to specify that we're not using shell execute it
         Dim PSI As Process = New Process With {.StartInfo = New ProcessStartInfo(Command) With {.UseShellExecute = False}}
 

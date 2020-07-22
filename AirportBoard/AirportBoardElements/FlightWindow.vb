@@ -55,7 +55,7 @@ Public Class FlightWindow
         'Load the FlightWindow file
         FileOpen(1, Filename, OpenMode.Input)
 
-        Dim CurrentTerminal As Terminal
+        Dim CurrentTerminal As Terminal = New Terminal("?")
         AllTerminals = New ArrayList
 
         While Not EOF(1)
