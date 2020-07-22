@@ -2,20 +2,25 @@
 Imports Igtampe.BasicRender.Draw
 Imports Igtampe.BasicRender.RenderUtils
 
+''' <summary>Parser that holds core commands for AirportBoard</summary>
 Public Class CoreParser
     Implements IABParser
 
+    '------------------------------------[Variables/Properties]------------------------------------
+
     Private ReadOnly MainBoard As AirportBoard
+
+    '------------------------------------[Constructors]------------------------------------
 
     Public Sub New(ByRef MainBoard As AirportBoard)
         Me.MainBoard = MainBoard
-
     End Sub
+
+    '------------------------------------[Functions]------------------------------------
 
     Public Function Parse(Line As String) As Boolean Implements IABParser.Parse
         Dim CurrentCommand() As String
         Dim Temp As String
-
 
         'ToUpper it
         Dim UpperLine As String = Line.ToUpper
@@ -125,8 +130,8 @@ Public Class CoreParser
         Return False
     End Function
 
+    ''' <summary>Tests the screen by running a few of the BasicRender commands</summary>
     Private Sub ScreenTest()
-
         'Test CenterText
         SetPos(0, 1)
         CenterText("SYSTEM TEST")
@@ -141,8 +146,7 @@ Public Class CoreParser
         'Test Sprite
         Sprite(" Hello!", ConsoleColor.Gray, ConsoleColor.Black)
 
-        'Test DrawFromFile
-
+        'Test Draw
         Dim DootDF As Graphic = New BasicGraphicFromResource(My.Resources.Doot)
         DootDF.Draw(0, 8)
 
@@ -172,8 +176,6 @@ Public Class CoreParser
         Else
             Sprite(MainBoard.BoardTicker.GetTicker(Length), BackgroundColor, ForegroundColor, leftpos, toppos)
         End If
-
     End Sub
-
 
 End Class

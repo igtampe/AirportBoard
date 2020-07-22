@@ -4,27 +4,40 @@ Imports Igtampe.BasicRender.RenderUtils
 
 Public Class AirportBoard
 
+    '------------------------------------[Variables/Properties]------------------------------------
+
+    ''' <summary>All the available parsers to this board</summary>
     Public AllParsers As List(Of IABParser)
 
     ''' <summary>Currentline *should* probably be a variable set only in Run, but it makes it harder to access it for the surrounding try-catch so that users can debug their own ABScript files. 
     ''' So we need to keep this here. </summary>
     Public CurrentLine As Integer
+
+    ''' <summary>Current page number</summary>
     Public CurrentPage As Integer
 
-    ''' <summary>Holds the current page</summary>
+    ''' <summary>Current Page Contents (Used to resume execution in the event of a break)</summary>
     Public CurrentPageContents As String()
 
+    ''' <summary>Tick ABScript that's held in memory</summary>
     Public TickAB As String()
+
+    ''' <summary>Indicates whether this board is tickable</summary>
     Public Tickable As Boolean = False
 
-
-
+    ''' <summary>Optionally loadable ticker text</summary>
     Public BoardTicker As Ticker
+
+    '------------------------------------[Constructors]------------------------------------
 
     Public Sub New()
         AllParsers = New List(Of IABParser)
     End Sub
 
+    '------------------------------------[Functions]------------------------------------
+
+    ''' <summary>Executes the board</summary>
+    ''' <param name="Args">Args from the console. Used if you need to pass/render a preview AB or DF file</param>
     Public Overridable Sub Execute(Args() As String)
 
         If Not File.Exists("Tick.ab") Then
@@ -81,10 +94,11 @@ Public Class AirportBoard
 
     End Sub
 
+    ''' <summary>Runs before executing Page0 for the first time</summary>
     Public Overridable Sub PreFirstPage()
         'nothing
+        'This is used by LandingPad, and potentially by other programs.
     End Sub
-
 
     ''' <summary>Returns the contents of a file as an array</summary>
     Public Shared Function GetFileContents(File As String) As String()
@@ -136,8 +150,8 @@ Public Class AirportBoard
 
     End Sub
 
-    ''' <summary>Sleep call for AirportBoard. Keeps any elements that need to tick ticking</summary>
-    ''' <param name="time"></param>
+    ''' <summary>Sleep call for AirportBoard. Keeps any elements that need to tick ticking, and checks for pressed keys to process</summary>
+    ''' <param name="time">Time in Milliseconds</param>
     Public Sub ABSleep(time As Integer)
 
         Dim Steppy As Integer = 250
@@ -159,6 +173,9 @@ Public Class AirportBoard
 
     End Sub
 
+    ''' <summary>Processes Key Inputs</summary>
+    ''' <param name="pressedkey">The key that was pressed</param>
+    ''' <returns>Returns true if the board should stop sleeping</returns>
     Public Overridable Function ProcessKeyInput(pressedkey As ConsoleKeyInfo) As Boolean
         Return pressedkey.Key = ConsoleKey.Escape
     End Function

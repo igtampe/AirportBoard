@@ -1,5 +1,7 @@
 ﻿Imports Igtampe.BasicRender.Draw
 Imports Igtampe.BasicRender.RenderUtils
+
+''' <summary>Holds some error handling functions</summary>
 Public Module GuruMeditationError
 
     ''' <summary>Shows a Guru Meditation Error after saving the error's stacktrace to disk</summary>

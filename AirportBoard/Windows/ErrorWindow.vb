@@ -2,7 +2,7 @@
 Imports Igtampe.BasicWindows.WindowElements
 
 
-''' <summary>A very simple </summary>
+''' <summary>A very simple Window that displays an error message, with a maximum of 3 lines</summary>
 Public Class ErrorWindow
     Inherits Window
 

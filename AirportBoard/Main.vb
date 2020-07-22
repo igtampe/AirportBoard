@@ -1,10 +1,9 @@
 ﻿Imports Igtampe.BasicRender.RenderUtils
-Imports Igtampe.BasicGraphics
 
 ''' <summary>Holds the main processes of AirportBoard</summary>
 Module Main
 
-    ''' <summary>Starts the AirportBoard</summary>
+    ''' <summary>Creates and starts the AirportBoard</summary>
     Public Sub Main()
 
         'Set color
@@ -21,7 +20,12 @@ Module Main
         Mainboard.AllParsers.Add(New CoreParser(Mainboard))
         Mainboard.AllParsers.Add(New AirportElementParser(Mainboard))
 
-        Mainboard.Execute(Environment.GetCommandLineArgs())
+        Try
+            Mainboard.Execute(Environment.GetCommandLineArgs())
+        Catch ex As Exception
+            LoadErrorPage(ex, Mainboard.CurrentPage, Mainboard.CurrentLine)
+        End Try
+
     End Sub
 
 End Module

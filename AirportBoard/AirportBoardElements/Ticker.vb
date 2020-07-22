@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 
+''' <summary>Holds and prepares text for scrolling ticker text</summary>
 Public Class Ticker
 
     '------------------------------------[Variables/Properties]------------------------------------
