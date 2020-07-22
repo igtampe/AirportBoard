@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports Igtampe.BasicRender.Draw
+Imports Igtampe.BasicRender.RenderUtils
 ''' <summary>Holds and renders a NewsWindow</summary>
 Public Class NewsWindow
 

@@ -1,4 +1,9 @@
 ﻿Imports System.IO
+Imports Igtampe.BasicGraphics
+Imports Igtampe.BasicRender.Draw
+Imports Igtampe.BasicRender.RenderUtils
+Imports AirportBoard.ErrorWindow
+Imports AirportBoard
 
 ''' <summary>Holds the main processes of AirportBoard</summary>
 Module Main
@@ -53,7 +58,8 @@ Module Main
 
         'We also need a lot more files
         If Not File.Exists("Tick.ab") Or Not File.Exists("Main.ab") Or Not File.Exists("Options.txt") Or Not File.Exists("PreAction.ab") Or Not File.Exists("About.ab") Then
-            DialogBox("Missing Critical Files! Cannot continue", 3, 1, True, True)
+            Dim Window As ErrorWindow = New ErrorWindow("Missing Critical Files! Cannot continue")
+            Window.Execute()
             Return
         Else
             Tickable = True
@@ -75,7 +81,8 @@ Module Main
 
         If Not File.Exists("ConsolePass.txt") Then
             ConsoleEnabled = False
-            DialogBox("ConsolePass.txt wasn't found, Console disabled", 3, 1, True, True)
+            Dim Window As ErrorWindow = New ErrorWindow("ConsolePass.txt wasn't found, Console disabled")
+            Window.Execute()
         End If
 
         If File.Exists("init.ab") Then
@@ -87,7 +94,11 @@ Module Main
             Console.Title &= " " & Args(1)
 
             If Args(1).ToUpper.EndsWith(".AB") Then Run(Args(1)) 'Run an AB file for a preview
-            If Args(1).ToUpper.EndsWith(".DF") Then DrawFromFile(Args(1), 0, 0) 'Draw a file as a preview
+            If Args(1).ToUpper.EndsWith(".DF") Then
+                'Draw a file as a preview
+                Dim Drawfile As Graphic = New BasicGraphicFromFile(Args(1))
+                Drawfile.Draw(0, 0)
+            End If
 
             Exit Sub
         End If
@@ -99,7 +110,6 @@ Module Main
 
     '----------------------------------------------------[Special Pages]----------------------------------------------------
 
-    ''' <summary>Tests screen to show all of what AirportBoard can do</summary>
     Private Sub ScreenTest()
 
         'Test CenterText
@@ -111,17 +121,19 @@ Module Main
 
         'Test Draw
         SetPos(6, 4)
-        Draw("0123456789ABCDEF")
+        BasicGraphic.DrawColorString("0123456789ABCDEF")
 
         'Test Sprite
         Sprite(" Hello!", ConsoleColor.Gray, ConsoleColor.Black)
 
         'Test DrawFromFile
-        DrawFromFile("Doot.DF", 0, 8)
+
+        Dim DootDF As Graphic = New BasicGraphicFromResource(My.Resources.Doot)
+        DootDF.Draw(0, 8)
 
         'Test HiColorDraw
         SetPos(23, 22)
-        HiColorDraw("010-011-012-112-120-121-122-222-230-231-232-330-340-341-342-440-450-451-452-550-560-561-562-660-670-671-672-770-780-781-782-880-800-801-802-000")
+        HiColorGraphic.HiColorDraw("010-011-012-112-120-121-122-222-230-231-232-330-340-341-342-440-450-451-452-550-560-561-562-660-670-671-672-770-780-781-782-880-800-801-802-000")
 
         'Sleep to make sure we can see this for at least a moment
         SetPos(0, 23)
@@ -140,9 +152,9 @@ Module Main
         CenterText("LandingPad V 1.0")
 
         SetPos(23, 18)
-        HiColorDraw("010-011-012-112-120-121-122-222-230-231-232-330-340-341-342-440-450-451-452-550-560-561-562-660-670-671-672-770-780-781-782-880-800-801-802-000")
+        HiColorGraphic.HiColorDraw("010-011-012-112-120-121-122-222-230-231-232-330-340-341-342-440-450-451-452-550-560-561-562-660-670-671-672-770-780-781-782-880-800-801-802-000")
         SetPos(23, 19)
-        HiColorDraw("090-091-092-992-120-9A1-9A2-AA2-AB0-AB1-AB2-BB0-BC0-BC1-BC2-CC0-CD0-CD1-CD2-DD0-DE0-DE1-DE2-EE0-EF0-EF1-EF2-FF0-F70-F71-F72-770-700-701-702-000")
+        HiColorGraphic.HiColorDraw("090-091-092-992-120-9A1-9A2-AA2-AB0-AB1-AB2-BB0-BC0-BC1-BC2-CC0-CD0-CD1-CD2-DD0-DE0-DE1-DE2-EE0-EF0-EF1-EF2-FF0-F70-F71-F72-770-700-701-702-000")
 
         SetPos(0, 21)
         CenterText("Based on Airportboard 2.0")
@@ -204,7 +216,8 @@ Module Main
 
         'If there's no files, make sure we tell the user there's no files!
         If Not File.Exists("Page0.AB") Then
-            DialogBox("No Pages Found", 3, 1, False, True)
+            Dim Window As ErrorWindow = New ErrorWindow("No pages found!")
+            Window.Execute()
             Exit Sub
         End If
 
@@ -456,7 +469,8 @@ Module Main
         ElseIf UpperLine.StartsWith("DRAW") Then
             'Draw from file (DRAW FILE LEFT TOP)
             CurrentCommand = Line.Split(" ")
-            DrawFromFile(CurrentCommand(1), CurrentCommand(2), CurrentCommand(3))
+            Dim Drawfile As Graphic = New BasicGraphicFromFile(CurrentCommand(1))
+            Drawfile.Draw(CurrentCommand(2), CurrentCommand(3))
             Return True
 
         ElseIf UpperLine.StartsWith("CLEAR") Then
@@ -467,14 +481,14 @@ Module Main
         ElseIf UpperLine.StartsWith("COLOR") Then
             'Set Screenwriter color (COLOR 0F)
             Temp = UpperLine.Replace("COLOR ", "") 'Temp holds the color string (0F)
-            Color(StringToColor(Temp(0)), StringToColor(Temp(1)))
+            Color(GraphicUtils.ColorCharToConsoleColor(Temp(0)), GraphicUtils.ColorCharToConsoleColor(Temp(1)))
             Return True
 
         ElseIf UpperLine.StartsWith("TEXT") Then
             'Draw text (TEXT~the text~0F~LEFT~TOP
             CurrentCommand = Line.Split("~")
             Temp = CurrentCommand(2) 'Temp holds a color string (0F)
-            Sprite(CurrentCommand(1), StringToColor(Temp(0)), StringToColor(Temp(1)), CurrentCommand(3), CurrentCommand(4))
+            Sprite(CurrentCommand(1), GraphicUtils.ColorCharToConsoleColor(Temp(0)), GraphicUtils.ColorCharToConsoleColor(Temp(1)), CurrentCommand(3), CurrentCommand(4))
             Return True
 
         ElseIf UpperLine.StartsWith("RUN") Then
@@ -501,21 +515,21 @@ Module Main
         ElseIf UpperLine.StartsWith("BOX") Then
             'Draws a box (BOX F LENGTH HEIGHT LEFT TOP)
             CurrentCommand = Line.Split(" ")
-            Box(StringToColor(CurrentCommand(1).ToString), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4), CurrentCommand(5))
+            Box(GraphicUtils.ColorCharToConsoleColor(CurrentCommand(1).ToString), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4), CurrentCommand(5))
             Return True
 
         ElseIf UpperLine.StartsWith("CLOCK") Then
             'Draws a clock at the specified position (CLOCK 0F LEFT TOP)
             CurrentCommand = Line.Split(" ")
             Temp = CurrentCommand(1) 'Temp holds a colorstring
-            Clock(StringToColor(Temp(0).ToString), StringToColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3))
+            Clock(GraphicUtils.ColorCharToConsoleColor(Temp(0).ToString), GraphicUtils.ColorCharToConsoleColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3))
             Return True
 
         ElseIf UpperLine.StartsWith("DATE") Then
             'Draws a date at the specified position (DATE 0F LEFT TOP)
             CurrentCommand = Line.Split(" ")
             Temp = CurrentCommand(1) 'Temp Holds a colorstring
-            DateRender(StringToColor(Temp(0).ToString), StringToColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3))
+            DateRender(GraphicUtils.ColorCharToConsoleColor(Temp(0).ToString), GraphicUtils.ColorCharToConsoleColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3))
             Return True
 
         ElseIf UpperLine.StartsWith("CENTERTEXT") Then
@@ -536,7 +550,7 @@ Module Main
             '(TICKER Colorstring Length leftpos toppos)
             CurrentCommand = Line.Split(" ")
             Temp = CurrentCommand(1) 'Temp Holds a colorstring
-            RenderTicker(StringToColor(Temp(0).ToString), StringToColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4))
+            RenderTicker(GraphicUtils.ColorCharToConsoleColor(Temp(0).ToString), GraphicUtils.ColorCharToConsoleColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4))
             Return True
 
         ElseIf UpperLine.StartsWith("SCREENTEST") Then

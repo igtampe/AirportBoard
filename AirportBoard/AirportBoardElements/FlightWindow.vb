@@ -1,4 +1,7 @@
 ﻿Imports System.IO
+Imports Igtampe.BasicRender.Draw
+Imports Igtampe.BasicRender.RenderUtils
+Imports Igtampe.BasicGraphics
 
 ''' <summary>Holds and renders a flightwindow</summary>
 Public Class FlightWindow
@@ -132,8 +135,8 @@ Public Class FlightWindow
                 If linecounter Mod 2 = 0 Then backgroundcolor = ConsoleColor.DarkGray Else backgroundcolor = ConsoleColor.Black
 
                 'Draw most things
-                Sprite(Flight.Airline, backgroundcolor, StringToColor(Flight.AirlineColor), 1, linecounter)
-                Sprite(Flight.FlightNumber, backgroundcolor, StringToColor(Flight.AirlineColor), 14, linecounter)
+                Sprite(Flight.Airline, backgroundcolor, GraphicUtils.ColorCharToConsoleColor(Flight.AirlineColor), 1, linecounter)
+                Sprite(Flight.FlightNumber, backgroundcolor, GraphicUtils.ColorCharToConsoleColor(Flight.AirlineColor), 14, linecounter)
                 Sprite(Flight.Gate, backgroundcolor, ConsoleColor.White, 21, linecounter)
                 Sprite(Flight.Time, backgroundcolor, ConsoleColor.White, 27, linecounter)
 
