@@ -69,11 +69,15 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirportBoardElements\AirportElementParser.vb" />
     <Compile Include="AirportBoardElements\FlightWindow.vb" />
     <Compile Include="AirportBoardElements\NewsWindow.vb" />
     <Compile Include="AirportBoardElements\Ticker.vb" />
     <Compile Include="AirportBoardElements\WeatherWindow.vb" />
     <Compile Include="BasicRender.vb" />
+    <Compile Include="IABParser.vb" />
+    <Compile Include="LandingPageElements\WeatherInformation.vb" />
+    <Compile Include="LandingPageElements\LandingPadElementParser.vb" />
     <Compile Include="LandingPageElements\LandingPageOption.vb" />
     <Compile Include="LandingPageElements\WeatherPage.vb" />
     <Compile Include="Main.vb" />

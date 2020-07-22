@@ -1,8 +1,15 @@
 ﻿Public Class WeatherPage
 
-    'This will eventually use the NOAA information to display actual weather, given a locaiton.
-    'Hopefully. Maybe. This is mostly here for a test commit.
+    Private Row As String
 
-    'Just one more test commit
+    Public Sub New(Gridpoints As String, Top As Integer, BG As String, FG As String)
+
+
+    End Sub
+
+    Public Sub Render()
+
+    End Sub
+
 
 End Class

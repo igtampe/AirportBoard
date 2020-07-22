@@ -28,7 +28,13 @@ Module Main
 
     Private ConsoleEnabled As Boolean = True
 
+    Private AllExtensions As IABParser()
+
     '----------------------------------------------------[Initialization]----------------------------------------------------
+
+    Public Sub init()
+        AllExtensions = {New LandingPadElementParser, New LandingPadElementParser}
+    End Sub
 
     ''' <summary>Starts the AirportBoard</summary>
     Public Sub Main()
@@ -255,120 +261,23 @@ Module Main
 
         For Each Line As String In PageContents
             CurrentLine += 1
+            Dim Parsed As Boolean = False
 
-            'ToUpper it
-            Dim UpperLine As String = Line.ToUpper
+            Parsed = Parse(Line)
 
-            If String.IsNullOrWhiteSpace(Line) Then
-                'do nothing
-
-            ElseIf UpperLine.StartsWith("'") Then
-                'Comment, do nothing
-
-            ElseIf UpperLine.StartsWith("DRAW") Then
-                'Draw from file (DRAW FILE LEFT TOP)
-                CurrentCommand = Line.Split(" ")
-                DrawFromFile(CurrentCommand(1), CurrentCommand(2), CurrentCommand(3))
-
-            ElseIf UpperLine.StartsWith("CLEAR") Then
-                'Clear the screen (CLEAR)
-                Console.Clear()
-
-            ElseIf UpperLine.StartsWith("COLOR") Then
-                'Set Screenwriter color (COLOR 0F)
-                Temp = UpperLine.Replace("COLOR ", "") 'Temp holds the color string (0F)
-                Color(StringToColor(Temp(0)), StringToColor(Temp(1)))
-
-            ElseIf UpperLine.StartsWith("TEXT") Then
-                'Draw text (TEXT~the text~0F~LEFT~TOP
-                CurrentCommand = Line.Split("~")
-                Temp = CurrentCommand(2) 'Temp holds a color string (0F)
-                Sprite(CurrentCommand(1), StringToColor(Temp(0)), StringToColor(Temp(1)), CurrentCommand(3), CurrentCommand(4))
-
-            ElseIf UpperLine.StartsWith("RUN") Then
-                'Run another ABScript file (RUN Page0.AB)
-                Temp = UpperLine.Replace("RUN ", "")
-                Dim oldcurrentpage As String() = currentpage
-                Dim oldcurrentline As Integer = CurrentLine
-                Run(Temp)
-                currentpage = oldcurrentpage
-                CurrentLine = oldcurrentline
-
-            ElseIf UpperLine.StartsWith("SLEEP") Then
-                'Wait for a specified number of milliseconds (SLEEP 100)
-                Temp = UpperLine.Replace("SLEEP ", "")
-                ABSleep(Temp)
-
-            ElseIf UpperLine.StartsWith("PAUSE") Then
-                'Wait for user to hit a key to continue
-                Pause()
-
-            ElseIf UpperLine.StartsWith("BOX") Then
-                'Draws a box (BOX F LENGTH HEIGHT LEFT TOP)
-                CurrentCommand = Line.Split(" ")
-                Box(StringToColor(CurrentCommand(1).ToString), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4), CurrentCommand(5))
-
-            ElseIf UpperLine.StartsWith("CLOCK") Then
-                'Draws a clock at the specified position (CLOCK 0F LEFT TOP)
-                CurrentCommand = Line.Split(" ")
-                Temp = CurrentCommand(1) 'Temp holds a colorstring
-                Clock(StringToColor(Temp(0).ToString), StringToColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3))
-
-            ElseIf UpperLine.StartsWith("DATE") Then
-                'Draws a date at the specified position (DATE 0F LEFT TOP)
-                CurrentCommand = Line.Split(" ")
-                Temp = CurrentCommand(1) 'Temp Holds a colorstring
-                DateRender(StringToColor(Temp(0).ToString), StringToColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3))
-
-            ElseIf UpperLine.StartsWith("CENTERTEXT") Then
-                'Centers text on screen (Centertext~text~row)
-                CurrentCommand = Line.Split("~")
-                SetPos(0, CurrentCommand(2))
-                CenterText(CurrentCommand(1))
-
-            ElseIf UpperLine.StartsWith("WEATHERWINDOW") Then
-                'Draws a WeatherWindow using a WeatherWindow File (WeatherWindow Filename Length Height leftpos Toppos)
-                CurrentCommand = Line.Split(" ")
-                Dim WW As WeatherWindow = New WeatherWindow(CurrentCommand(1), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4), CurrentCommand(5))
-                WW.Render()
-
-            ElseIf UpperLine.StartsWith("NEWSWINDOW") Then
-                'Draws a NewsWindow using a NewsWindow File (NEWSWIDNDOW File)
-                CurrentCommand = Line.Split(" ")
-                Dim NW As NewsWindow = New NewsWindow(CurrentCommand(1))
-                NW.Render()
-
-            ElseIf UpperLine.StartsWith("FLIGHTWINDOW") Then
-                'Draws a FlightWindow using a Flightwindow file (FlightWindow, DepartureMode)
-                CurrentCommand = Line.Split(" ")
-                Dim FW As FlightWindow = New FlightWindow(CurrentCommand(1), CurrentCommand(2))
-                FW.Render()
-
-            ElseIf UpperLine.StartsWith("INITTICKER") Then
-                'Initialize the ticker
-                CurrentCommand = Line.Split(" ")
-                BoardTicker = New Ticker(CurrentCommand(1))
-
-            ElseIf UpperLine.StartsWith("TICKER") Then
-                'Draws the initialized ticker with specified colors, at specified position, with specified lenght
-                '(TICKER Colorstring Length leftpos toppos)
-                CurrentCommand = Line.Split(" ")
-                Temp = CurrentCommand(1) 'Temp Holds a colorstring
-                RenderTicker(StringToColor(Temp(0).ToString), StringToColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4))
-
-            ElseIf UpperLine.StartsWith("SCREENTEST") Then
-                ScreenTest()
-                Console.Clear()
-
-            Else
-                'Oopsie this line is unparsable
-                GuruMeditationError("Could not interpret line " & CurrentLine, UpperLine.Split(" ")(0), "", "")
+            'If it's not parsed, try with the extensions
+            If Not Parsed Then
+                For Each Parser As IABParser In AllExtensions
+                    Parsed = Parser.Parse(Line)
+                    If Parsed Then Exit For
+                Next
             End If
+
+            'If it's still not parsed, then it's unparsable
+            If Not Parsed Then GuruMeditationError("Could not interpret line " & CurrentLine, Line.Split(" ")(0), "", "")
 
             'This is used by re-render
-            If Not maxline = -1 Then
-                If CurrentLine = maxline Then Return
-            End If
+            If Not maxline = -1 Then If CurrentLine = maxline Then Return
 
         Next
 
@@ -524,5 +433,121 @@ Module Main
 
         Pause()
     End Sub
+
+    '----------------------------------------------------[Core Parser]----------------------------------------------------
+
+    ''' <summary>Parses critical funcitons, along with empty lines and comments</summary>
+    Private Function Parse(Line As String) As Boolean
+        Dim CurrentCommand() As String
+        Dim Temp As String
+
+
+        'ToUpper it
+        Dim UpperLine As String = Line.ToUpper
+
+        If String.IsNullOrWhiteSpace(Line) Then
+            'do nothing
+            Return True
+
+        ElseIf UpperLine.StartsWith("'") Then
+            'Comment, do nothing
+            Return True
+
+        ElseIf UpperLine.StartsWith("DRAW") Then
+            'Draw from file (DRAW FILE LEFT TOP)
+            CurrentCommand = Line.Split(" ")
+            DrawFromFile(CurrentCommand(1), CurrentCommand(2), CurrentCommand(3))
+            Return True
+
+        ElseIf UpperLine.StartsWith("CLEAR") Then
+            'Clear the screen (CLEAR)
+            Console.Clear()
+            Return True
+
+        ElseIf UpperLine.StartsWith("COLOR") Then
+            'Set Screenwriter color (COLOR 0F)
+            Temp = UpperLine.Replace("COLOR ", "") 'Temp holds the color string (0F)
+            Color(StringToColor(Temp(0)), StringToColor(Temp(1)))
+            Return True
+
+        ElseIf UpperLine.StartsWith("TEXT") Then
+            'Draw text (TEXT~the text~0F~LEFT~TOP
+            CurrentCommand = Line.Split("~")
+            Temp = CurrentCommand(2) 'Temp holds a color string (0F)
+            Sprite(CurrentCommand(1), StringToColor(Temp(0)), StringToColor(Temp(1)), CurrentCommand(3), CurrentCommand(4))
+            Return True
+
+        ElseIf UpperLine.StartsWith("RUN") Then
+            'Run another ABScript file (RUN Page0.AB)
+            Temp = UpperLine.Replace("RUN ", "")
+            Dim oldcurrentpage As String() = currentpage
+            Dim oldcurrentline As Integer = CurrentLine
+            Run(Temp)
+            currentpage = oldcurrentpage
+            CurrentLine = oldcurrentline
+            Return True
+
+        ElseIf UpperLine.StartsWith("SLEEP") Then
+            'Wait for a specified number of milliseconds (SLEEP 100)
+            Temp = UpperLine.Replace("SLEEP ", "")
+            ABSleep(Temp)
+            Return True
+
+        ElseIf UpperLine.StartsWith("PAUSE") Then
+            'Wait for user to hit a key to continue
+            Pause()
+            Return True
+
+        ElseIf UpperLine.StartsWith("BOX") Then
+            'Draws a box (BOX F LENGTH HEIGHT LEFT TOP)
+            CurrentCommand = Line.Split(" ")
+            Box(StringToColor(CurrentCommand(1).ToString), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4), CurrentCommand(5))
+            Return True
+
+        ElseIf UpperLine.StartsWith("CLOCK") Then
+            'Draws a clock at the specified position (CLOCK 0F LEFT TOP)
+            CurrentCommand = Line.Split(" ")
+            Temp = CurrentCommand(1) 'Temp holds a colorstring
+            Clock(StringToColor(Temp(0).ToString), StringToColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3))
+            Return True
+
+        ElseIf UpperLine.StartsWith("DATE") Then
+            'Draws a date at the specified position (DATE 0F LEFT TOP)
+            CurrentCommand = Line.Split(" ")
+            Temp = CurrentCommand(1) 'Temp Holds a colorstring
+            DateRender(StringToColor(Temp(0).ToString), StringToColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3))
+            Return True
+
+        ElseIf UpperLine.StartsWith("CENTERTEXT") Then
+            'Centers text on screen (Centertext~text~row)
+            CurrentCommand = Line.Split("~")
+            SetPos(0, CurrentCommand(2))
+            CenterText(CurrentCommand(1))
+            Return True
+
+        ElseIf UpperLine.StartsWith("INITTICKER") Then
+            'Initialize the ticker
+            CurrentCommand = Line.Split(" ")
+            BoardTicker = New Ticker(CurrentCommand(1))
+            Return True
+
+        ElseIf UpperLine.StartsWith("TICKER") Then
+            'Draws the initialized ticker with specified colors, at specified position, with specified lenght
+            '(TICKER Colorstring Length leftpos toppos)
+            CurrentCommand = Line.Split(" ")
+            Temp = CurrentCommand(1) 'Temp Holds a colorstring
+            RenderTicker(StringToColor(Temp(0).ToString), StringToColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4))
+            Return True
+
+        ElseIf UpperLine.StartsWith("SCREENTEST") Then
+            ScreenTest()
+            Console.Clear()
+            Return True
+        End If
+
+        Return False
+
+    End Function
+
 
 End Module
