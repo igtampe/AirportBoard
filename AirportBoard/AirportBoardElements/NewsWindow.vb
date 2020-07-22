@@ -62,7 +62,7 @@ Public Class NewsWindow
     End Sub
 
     ''' <summary>Renders a NewsWindow</summary>
-    Public Sub Render()
+    Public Sub Render(ByRef Board As AirportBoard)
         Box(ConsoleColor.DarkRed, 80, 20, 0, 4)
 
         Dim currentLine As Integer = 4
@@ -72,7 +72,7 @@ Public Class NewsWindow
             If Item.Lines.Count + currentLine > 23 Then
                 'We're out of space, wait, then redraw the box that holds news
                 currentLine = 4
-                ABSleep(30000)
+                Board.ABSleep(30000)
 
                 Box(ConsoleColor.DarkRed, 80, 20, 0, 4)
             End If
@@ -97,7 +97,7 @@ Public Class NewsWindow
         Next
 
         'Last sleep to make sure people can read the last items
-        ABSleep(30000)
+        Board.ABSleep(30000)
 
     End Sub
 

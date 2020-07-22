@@ -48,7 +48,7 @@ Public Class WeatherWindow
         FileClose(1)
     End Sub
 
-    Public Sub Render()
+    Public Sub Render(ByRef Board As AirportBoard)
 
         Dim CurrentRow As Integer
         Dim CurrentColumn As Integer
@@ -81,7 +81,7 @@ Public Class WeatherWindow
 
                 If CurrentColumn > Length Then
                     'we're out of space, wait, then reset it
-                    ABSleep(10000)
+                    Board.ABSleep(10000)
                     Box(ConsoleColor.Gray, (Length) * 30, (Height) * 5 + (Height), Leftpos, Toppos)
                     CurrentColumn = 1
                 End If
@@ -89,7 +89,7 @@ Public Class WeatherWindow
             End If
         Next
 
-        ABSleep(10000)
+        Board.ABSleep(10000)
 
     End Sub
 

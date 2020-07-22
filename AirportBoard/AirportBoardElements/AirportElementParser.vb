@@ -2,6 +2,12 @@
 Public Class AirportElementParser
     Implements IABParser
 
+    Private MainBoard As AirportBoard
+
+    Public Sub New(ByRef MainBoard As AirportBoard)
+        Me.MainBoard = MainBoard
+    End Sub
+
     Public Function Parse(Line As String) As Boolean Implements IABParser.Parse
 
         Dim Upperline As String = Line.ToUpper
@@ -11,21 +17,21 @@ Public Class AirportElementParser
             'Draws a WeatherWindow using a WeatherWindow File (WeatherWindow Filename Length Height leftpos Toppos)
             CurrentCommand = Line.Split(" ")
             Dim WW As WeatherWindow = New WeatherWindow(CurrentCommand(1), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4), CurrentCommand(5))
-            WW.Render()
+            WW.Render(MainBoard)
             Return True
 
         ElseIf Upperline.StartsWith("NEWSWINDOW") Then
             'Draws a NewsWindow using a NewsWindow File (NEWSWIDNDOW File)
             CurrentCommand = Line.Split(" ")
             Dim NW As NewsWindow = New NewsWindow(CurrentCommand(1))
-            NW.Render()
+            NW.Render(MainBoard)
             Return True
 
         ElseIf Upperline.StartsWith("FLIGHTWINDOW") Then
             'Draws a FlightWindow using a Flightwindow file (FlightWindow, DepartureMode)
             CurrentCommand = Line.Split(" ")
             Dim FW As FlightWindow = New FlightWindow(CurrentCommand(1), CurrentCommand(2))
-            FW.Render()
+            FW.Render(MainBoard)
             Return True
         End If
 

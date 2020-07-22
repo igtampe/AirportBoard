@@ -38,7 +38,7 @@ Module Main
     '----------------------------------------------------[Initialization]----------------------------------------------------
 
     Public Sub init()
-        AllExtensions = {New LandingPadElementParser, New LandingPadElementParser}
+        AllExtensions = {New AirportBoard.CoreParser, New LandingPadElementParser}
     End Sub
 
     ''' <summary>Starts the AirportBoard</summary>
@@ -51,7 +51,7 @@ Module Main
         Console.SetWindowSize(80, 24)
         Console.SetBufferSize(80, 24)
         Console.Clear()
-        Console.Title = "LandingPad [Version 1.0] (Based on AirportBoard [Version 2.0])"
+        Console.Title = "LandingPad [Version 1.0] (Based on AirportBoard [Version 3.0])"
 
         'LandingPad is a little smaller, as the SSH window we have is just one line smaller
         'I didn't realize that when I made AirportBoard. Oopsie.
@@ -231,7 +231,7 @@ Module Main
                 Run("Page" & CurrentPage & ".ab")
             Catch ex As Exception
                 'in case there has been an error
-                LoadErrorPage(ex, CurrentPage)
+                GuruMeditationError.LoadErrorPage(ex, CurrentPage)
             End Try
 
             CurrentPage += 1
@@ -274,20 +274,16 @@ Module Main
 
         For Each Line As String In PageContents
             CurrentLine += 1
-            Dim Parsed As Boolean = False
+            Dim Parsed As Boolean
 
-            Parsed = Parse(Line)
-
-            'If it's not parsed, try with the extensions
-            If Not Parsed Then
-                For Each Parser As IABParser In AllExtensions
-                    Parsed = Parser.Parse(Line)
-                    If Parsed Then Exit For
-                Next
-            End If
+            'Try to parse it
+            For Each Parser As IABParser In AllExtensions
+                Parsed = Parser.Parse(Line)
+                If Parsed Then Exit For
+            Next
 
             'If it's still not parsed, then it's unparsable
-            If Not Parsed Then GuruMeditationError("Could not interpret line " & CurrentLine, Line.Split(" ")(0), "", "")
+            If Not Parsed Then GuruMeditationError.Render("Could not interpret line " & CurrentLine, Line.Split(" ")(0), "", "")
 
             'This is used by re-render
             If Not maxline = -1 Then If CurrentLine = maxline Then Return
@@ -296,73 +292,6 @@ Module Main
 
     End Sub
 
-    ''' <summary>Processes keyInput for ABSleep, and returns true if ABSleep needs to quit (IE because it processed a key)</summary>
-    Public Function ProcessKeyInput() As Boolean
-
-        Dim pressedkey = Console.ReadKey(True)
-        Select Case pressedkey.Key
-            Case ConsoleKey.Escape
-                'Escape, skip ABSleep
-                Return True
-            Case ConsoleKey.A
-                'show about
-                AboutPage()
-                ReRender()
-                Return True
-            Case ConsoleKey.D
-                'exit
-                Run(PreActionAB)
-                CenterText("G O O D B Y E")
-                Sleep(2000) 'This sleep is ok because we don't need to call absleep to tick stuff now.
-                Environment.Exit(0)
-            Case ConsoleKey.Oem3
-                'tilde, activate console
-                If ConsoleEnabled Then
-                    ConsoleAccess()
-                    ReRender()
-                    Return True
-                End If
-            Case Else
-                For Each Opt As LandingPageOption In AllActions
-                    If pressedkey.KeyChar = Opt.Keychar Then
-                        Run(PreActionAB)
-                        Try
-                            StartProcessInLine(Opt.Command)
-                        Catch ex As Exception
-                            GuruMeditationError("An error occurred while launching the process:", Opt.Command, ex.Message, "")
-                        End Try
-                        ReRender()
-                        Return True
-                    End If
-                Next
-        End Select
-
-        Return False
-
-    End Function
-
-    ''' <summary>Sleep call for AirportBoard. Keeps any elements that need to tick ticking</summary>
-    ''' <param name="time"></param>
-    Public Sub ABSleep(time As Integer)
-
-        Dim Steppy As Integer = 250
-
-        If time < Steppy Or Not Tickable Then
-            Sleep(time)
-            Return
-        End If
-
-        For X = 0 To time Step Steppy
-
-            If Console.KeyAvailable Then
-                If ProcessKeyInput() Then Return
-            End If
-
-            Run(TickAB)
-            Sleep(Math.Min(time - X, Steppy))
-        Next
-
-    End Sub
 
     ''' <summary>Starts the specified process in line with this console</summary>
     Public Sub StartProcessInLine(Command As String)
@@ -386,7 +315,7 @@ Module Main
     ''' <summary>Renders the ticker</summary>
     Public Sub RenderTicker(BackgroundColor As ConsoleColor, ForegroundColor As ConsoleColor, Length As Integer, leftpos As Integer, toppos As Integer)
         If IsNothing(BoardTicker) Then
-            GuruMeditationError("Cannot run ticker, ticker not initialized!", "", "", "")
+            GuruMeditationError.Render("Cannot run ticker, ticker not initialized!", "", "", "")
         Else
             Sprite(BoardTicker.GetTicker(Length), BackgroundColor, ForegroundColor, leftpos, toppos)
         End If
@@ -402,166 +331,6 @@ Module Main
     Public Sub DateRender(backgroundcolor As ConsoleColor, foregroundcolor As ConsoleColor, leftpos As Integer, toppos As Integer)
         Sprite(DateTime.Now.ToShortDateString, backgroundcolor, foregroundcolor, leftpos, toppos)
     End Sub
-
-    '----------------------------------------------------[Error Handling]----------------------------------------------------
-
-    ''' <summary>Shows a Guru Meditation Error after saving the error's stacktrace to disk</summary>
-    Private Sub LoadErrorPage(ex As Exception, PageIndex As Integer)
-
-        Try
-            FileOpen(1, "ABErrors.txt", OpenMode.Append)
-            PrintLine(1, "=[AB ERROR]======================================================")
-            PrintLine(1, ex.Message)
-            PrintLine(1, ex.StackTrace)
-            PrintLine(1, "=================================================================")
-            FileClose(1)
-        Catch ex2 As Exception
-            GuruMeditationError("There was an error saving the error", ex2.Message.Split(vbNewLine)(0), ex.Source, "I don't know how this could happen")
-        End Try
-
-        GuruMeditationError("Error at Page " & PageIndex & " Line " & CurrentLine, ex.Message.Split(vbNewLine)(0), ex.Source, "The error was written to ABErrors.txt")
-
-    End Sub
-
-    ''' <summary>Shows a guru meditation error</summary>
-    Public Sub GuruMeditationError(Line1 As String, Line2 As String, Line3 As String, line4 As String)
-        '80x25
-        Color(ConsoleColor.DarkGray, ConsoleColor.Red)
-        Box(ConsoleColor.DarkGray, 50, 15, 15, 5)
-        Box(ConsoleColor.Red, 50, 1, 15, 5)
-        Color(ConsoleColor.Red, ConsoleColor.White)
-        SetPos(0, 5)
-        CenterText("Guru Meditation Error")
-
-        Box(ConsoleColor.Gray, 48, 10, 16, 7)
-
-        Sprite(Line1, ConsoleColor.Gray, ConsoleColor.Black, 17, 8)
-        Sprite(Line2, ConsoleColor.Gray, ConsoleColor.Black, 17, 10)
-        Sprite(Line3, ConsoleColor.Gray, ConsoleColor.Black, 17, 11)
-        Sprite(line4, ConsoleColor.Gray, ConsoleColor.Black, 17, 13)
-
-        SetPos(0, 18)
-        Color(ConsoleColor.DarkGray, ConsoleColor.Black)
-        CenterText("Press a key to continue execution")
-
-        Pause()
-    End Sub
-
-    '----------------------------------------------------[Core Parser]----------------------------------------------------
-
-    ''' <summary>Parses critical funcitons, along with empty lines and comments</summary>
-    Private Function Parse(Line As String) As Boolean
-        Dim CurrentCommand() As String
-        Dim Temp As String
-
-
-        'ToUpper it
-        Dim UpperLine As String = Line.ToUpper
-
-        If String.IsNullOrWhiteSpace(Line) Then
-            'do nothing
-            Return True
-
-        ElseIf UpperLine.StartsWith("'") Then
-            'Comment, do nothing
-            Return True
-
-        ElseIf UpperLine.StartsWith("DRAW") Then
-            'Draw from file (DRAW FILE LEFT TOP)
-            CurrentCommand = Line.Split(" ")
-            Dim Drawfile As Graphic = New BasicGraphicFromFile(CurrentCommand(1))
-            Drawfile.Draw(CurrentCommand(2), CurrentCommand(3))
-            Return True
-
-        ElseIf UpperLine.StartsWith("CLEAR") Then
-            'Clear the screen (CLEAR)
-            Console.Clear()
-            Return True
-
-        ElseIf UpperLine.StartsWith("COLOR") Then
-            'Set Screenwriter color (COLOR 0F)
-            Temp = UpperLine.Replace("COLOR ", "") 'Temp holds the color string (0F)
-            Color(GraphicUtils.ColorCharToConsoleColor(Temp(0)), GraphicUtils.ColorCharToConsoleColor(Temp(1)))
-            Return True
-
-        ElseIf UpperLine.StartsWith("TEXT") Then
-            'Draw text (TEXT~the text~0F~LEFT~TOP
-            CurrentCommand = Line.Split("~")
-            Temp = CurrentCommand(2) 'Temp holds a color string (0F)
-            Sprite(CurrentCommand(1), GraphicUtils.ColorCharToConsoleColor(Temp(0)), GraphicUtils.ColorCharToConsoleColor(Temp(1)), CurrentCommand(3), CurrentCommand(4))
-            Return True
-
-        ElseIf UpperLine.StartsWith("RUN") Then
-            'Run another ABScript file (RUN Page0.AB)
-            Temp = UpperLine.Replace("RUN ", "")
-            Dim oldcurrentpage As String() = currentpage
-            Dim oldcurrentline As Integer = CurrentLine
-            Run(Temp)
-            currentpage = oldcurrentpage
-            CurrentLine = oldcurrentline
-            Return True
-
-        ElseIf UpperLine.StartsWith("SLEEP") Then
-            'Wait for a specified number of milliseconds (SLEEP 100)
-            Temp = UpperLine.Replace("SLEEP ", "")
-            ABSleep(Temp)
-            Return True
-
-        ElseIf UpperLine.StartsWith("PAUSE") Then
-            'Wait for user to hit a key to continue
-            Pause()
-            Return True
-
-        ElseIf UpperLine.StartsWith("BOX") Then
-            'Draws a box (BOX F LENGTH HEIGHT LEFT TOP)
-            CurrentCommand = Line.Split(" ")
-            Box(GraphicUtils.ColorCharToConsoleColor(CurrentCommand(1).ToString), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4), CurrentCommand(5))
-            Return True
-
-        ElseIf UpperLine.StartsWith("CLOCK") Then
-            'Draws a clock at the specified position (CLOCK 0F LEFT TOP)
-            CurrentCommand = Line.Split(" ")
-            Temp = CurrentCommand(1) 'Temp holds a colorstring
-            Clock(GraphicUtils.ColorCharToConsoleColor(Temp(0).ToString), GraphicUtils.ColorCharToConsoleColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3))
-            Return True
-
-        ElseIf UpperLine.StartsWith("DATE") Then
-            'Draws a date at the specified position (DATE 0F LEFT TOP)
-            CurrentCommand = Line.Split(" ")
-            Temp = CurrentCommand(1) 'Temp Holds a colorstring
-            DateRender(GraphicUtils.ColorCharToConsoleColor(Temp(0).ToString), GraphicUtils.ColorCharToConsoleColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3))
-            Return True
-
-        ElseIf UpperLine.StartsWith("CENTERTEXT") Then
-            'Centers text on screen (Centertext~text~row)
-            CurrentCommand = Line.Split("~")
-            SetPos(0, CurrentCommand(2))
-            CenterText(CurrentCommand(1))
-            Return True
-
-        ElseIf UpperLine.StartsWith("INITTICKER") Then
-            'Initialize the ticker
-            CurrentCommand = Line.Split(" ")
-            BoardTicker = New Ticker(CurrentCommand(1))
-            Return True
-
-        ElseIf UpperLine.StartsWith("TICKER") Then
-            'Draws the initialized ticker with specified colors, at specified position, with specified lenght
-            '(TICKER Colorstring Length leftpos toppos)
-            CurrentCommand = Line.Split(" ")
-            Temp = CurrentCommand(1) 'Temp Holds a colorstring
-            RenderTicker(GraphicUtils.ColorCharToConsoleColor(Temp(0).ToString), GraphicUtils.ColorCharToConsoleColor(Temp(1).ToString), CurrentCommand(2), CurrentCommand(3), CurrentCommand(4))
-            Return True
-
-        ElseIf UpperLine.StartsWith("SCREENTEST") Then
-            ScreenTest()
-            Console.Clear()
-            Return True
-        End If
-
-        Return False
-
-    End Function
 
 
 End Module

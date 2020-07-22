@@ -98,7 +98,7 @@ Public Class FlightWindow
 
 
     ''' <summary>Renders the flightwindow</summary>
-    Public Sub Render()
+    Public Sub Render(ByRef Board As AirportBoard)
 
         If IsNothing(AllTerminals) Then Return
 
@@ -122,7 +122,7 @@ Public Class FlightWindow
 
                 'Handles when we run out of space
                 If linecounter = 23 Then
-                    ABSleep(20000)
+                    Board.ABSleep(20000)
 
                     'Reset the linecounter
                     linecounter = 5
@@ -188,7 +188,7 @@ Public Class FlightWindow
             End While
 
             'Sleep then move on to the next terminal
-            ABSleep(20000)
+            Board.ABSleep(20000)
         Next
 
 

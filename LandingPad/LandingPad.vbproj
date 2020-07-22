@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IABParser.vb" />
+    <Compile Include="LandingPad.vb" />
     <Compile Include="LandingPageElements\WeatherInformation.vb" />
     <Compile Include="LandingPageElements\LandingPadElementParser.vb" />
     <Compile Include="LandingPageElements\LandingPageOption.vb" />
