@@ -4,6 +4,7 @@ Imports Igtampe.BasicRender.Draw
 Imports Igtampe.BasicRender.RenderUtils
 Imports Igtampe.BasicGraphics
 
+''' <summary>LandingPad Extends AirportBoard, and while using it to display ABScript files, Also allows users to launch programs on the console</summary>
 Public Class LandingPad
     Inherits AirportBoard.AirportBoard
 
@@ -39,7 +40,7 @@ Public Class LandingPad
             AllActions = New ArrayList(TempOptions.Count)
             Try
                 For Each Line As String In TempOptions
-                    AllActions.Add(New LandingPageOption(Line.Split("~")(0), Line.Split("~")(1)))
+                    AllActions.Add(New LandingPadOption(Line.Split("~")(0), Line.Split("~")(1)))
                 Next
             Catch ex As Exception
                 GuruMeditationError.RenderGuruMeditationError("An error occurred while processing your options", ex.Message, "", "")
@@ -87,7 +88,7 @@ Public Class LandingPad
                     Return True
                 End If
             Case Else
-                For Each Opt As LandingPageOption In AllActions
+                For Each Opt As LandingPadOption In AllActions
                     If pressedkey.KeyChar = Opt.Keychar Then
                         Run(PreActionAB)
                         Try

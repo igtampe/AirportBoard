@@ -72,6 +72,9 @@ AirportBoard
  <summary>Renders this NewsWindow</summary>
  <param name="Board">Board that will be used for ABSleep</param>
 </member>
+<member name="T:AirportBoard.Ticker">
+ <summary>Holds and prepares text for scrolling ticker text</summary>
+</member>
 <member name="M:AirportBoard.Ticker.GetTicker(System.Int32)">
  <summary>
  Gets a ticker string of specified length<br></br>
@@ -84,12 +87,34 @@ AirportBoard
 <member name="T:AirportBoard.WeatherWindow.WeatherWindowItem">
  <summary>Weather Item</summary>
 </member>
+<member name="F:AirportBoard.AirportBoard.AllParsers">
+ <summary>All the available parsers to this board</summary>
+</member>
 <member name="F:AirportBoard.AirportBoard.CurrentLine">
  <summary>Currentline *should* probably be a variable set only in Run, but it makes it harder to access it for the surrounding try-catch so that users can debug their own ABScript files. 
  So we need to keep this here. </summary>
 </member>
+<member name="F:AirportBoard.AirportBoard.CurrentPage">
+ <summary>Current page number</summary>
+</member>
 <member name="F:AirportBoard.AirportBoard.CurrentPageContents">
- <summary>Holds the current page</summary>
+ <summary>Current Page Contents (Used to resume execution in the event of a break)</summary>
+</member>
+<member name="F:AirportBoard.AirportBoard.TickAB">
+ <summary>Tick ABScript that's held in memory</summary>
+</member>
+<member name="F:AirportBoard.AirportBoard.Tickable">
+ <summary>Indicates whether this board is tickable</summary>
+</member>
+<member name="F:AirportBoard.AirportBoard.BoardTicker">
+ <summary>Optionally loadable ticker text</summary>
+</member>
+<member name="M:AirportBoard.AirportBoard.Execute(System.String[])">
+ <summary>Executes the board</summary>
+ <param name="Args">Args from the console. Used if you need to pass/render a preview AB or DF file</param>
+</member>
+<member name="M:AirportBoard.AirportBoard.PreFirstPage">
+ <summary>Runs before executing Page0 for the first time</summary>
 </member>
 <member name="M:AirportBoard.AirportBoard.GetFileContents(System.String)">
  <summary>Returns the contents of a file as an array</summary>
@@ -101,8 +126,19 @@ AirportBoard
  <summary>Run an array of ABScript Commands</summary>
 </member>
 <member name="M:AirportBoard.AirportBoard.ABSleep(System.Int32)">
- <summary>Sleep call for AirportBoard. Keeps any elements that need to tick ticking</summary>
- <param name="time"></param>
+ <summary>Sleep call for AirportBoard. Keeps any elements that need to tick ticking, and checks for pressed keys to process</summary>
+ <param name="time">Time in Milliseconds</param>
+</member>
+<member name="M:AirportBoard.AirportBoard.ProcessKeyInput(System.ConsoleKeyInfo)">
+ <summary>Processes Key Inputs</summary>
+ <param name="pressedkey">The key that was pressed</param>
+ <returns>Returns true if the board should stop sleeping</returns>
+</member>
+<member name="T:AirportBoard.CoreParser">
+ <summary>Parser that holds core commands for AirportBoard</summary>
+</member>
+<member name="M:AirportBoard.CoreParser.ScreenTest">
+ <summary>Tests the screen by running a few of the BasicRender commands</summary>
 </member>
 <member name="M:AirportBoard.CoreParser.Clock(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32)">
  <summary>Renders the current time to screen</summary>
@@ -113,6 +149,9 @@ AirportBoard
 <member name="M:AirportBoard.CoreParser.RenderTicker(System.ConsoleColor,System.ConsoleColor,System.Int32,System.Int32,System.Int32)">
  <summary>Renders the ticker</summary>
 </member>
+<member name="T:AirportBoard.IABParser">
+ <summary>Interface that holds a parser for ABScript</summary>
+</member>
 <member name="M:AirportBoard.IABParser.Parse(System.String)">
  <summary>Parses a line of an ABScript file</summary>
  <param name="Line">A line of an ABScript file</param>
@@ -122,7 +161,10 @@ AirportBoard
  <summary>Holds the main processes of AirportBoard</summary>
 </member>
 <member name="M:AirportBoard.Main.Main">
- <summary>Starts the AirportBoard</summary>
+ <summary>Creates and starts the AirportBoard</summary>
+</member>
+<member name="T:AirportBoard.GuruMeditationError">
+ <summary>Holds some error handling functions</summary>
 </member>
 <member name="M:AirportBoard.GuruMeditationError.LoadErrorPage(System.Exception,System.Int32,System.Int32)">
  <summary>Shows a Guru Meditation Error after saving the error's stacktrace to disk</summary>
@@ -131,7 +173,7 @@ AirportBoard
  <summary>Shows a guru meditation error</summary>
 </member>
 <member name="T:AirportBoard.ErrorWindow">
- <summary>A very simple </summary>
+ <summary>A very simple Window that displays an error message, with a maximum of 3 lines</summary>
 </member>
 </members>
 </doc>

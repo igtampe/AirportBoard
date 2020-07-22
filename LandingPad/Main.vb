@@ -1,13 +1,10 @@
-﻿Imports System.IO
-Imports Igtampe.BasicGraphics
-Imports Igtampe.BasicRender.Draw
-Imports Igtampe.BasicRender.RenderUtils
+﻿Imports Igtampe.BasicRender.RenderUtils
 Imports AirportBoard
 
-''' <summary>Holds the main processes of AirportBoard</summary>
+''' <summary>Holds the main processes of LandingPad</summary>
 Module Main
 
-    ''' <summary>Starts the AirportBoard</summary>
+    ''' <summary>Creates and starts the LandingPad</summary>
     Public Sub Main()
 
         'Set color

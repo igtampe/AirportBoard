@@ -84,7 +84,7 @@
     <Compile Include="LandingPad.vb" />
     <Compile Include="LandingPageElements\WeatherInformation.vb" />
     <Compile Include="LandingPageElements\LandingPadElementParser.vb" />
-    <Compile Include="LandingPageElements\LandingPageOption.vb" />
+    <Compile Include="LandingPageElements\LandingPadOption.vb" />
     <Compile Include="LandingPageElements\WeatherPage.vb" />
     <Compile Include="Main.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

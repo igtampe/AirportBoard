@@ -1,5 +1,6 @@
 ﻿Imports AirportBoard
 
+''' <summary>LandingPad ABScript Parser</summary>
 Public Class LandingPadElementParser
     Implements IABParser
 

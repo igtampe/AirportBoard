@@ -2,6 +2,7 @@
 Imports Igtampe.BasicGraphics
 Imports Igtampe.BasicRender.RenderUtils
 
+''' <summary>AirportBoard reads,parses, and displays ABScriptFiles using its different parsers </summary>
 Public Class AirportBoard
 
     '------------------------------------[Variables/Properties]------------------------------------

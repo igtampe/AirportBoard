@@ -1,4 +1,5 @@
-﻿Public Class WeatherPage
+﻿''' <summary>Page that will eventually hold and display weather information from NOAA</summary>
+Public Class WeatherPage
 
     'Private Row As String
 
