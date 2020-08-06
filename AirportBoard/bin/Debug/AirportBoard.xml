@@ -87,6 +87,9 @@ AirportBoard
 <member name="T:AirportBoard.WeatherWindow.WeatherWindowItem">
  <summary>Weather Item</summary>
 </member>
+<member name="T:AirportBoard.AirportBoard">
+ <summary>AirportBoard reads,parses, and displays ABScriptFiles using its different parsers </summary>
+</member>
 <member name="F:AirportBoard.AirportBoard.AllParsers">
  <summary>All the available parsers to this board</summary>
 </member>

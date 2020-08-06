@@ -52,14 +52,17 @@
     <ApplicationIcon>AirportBoard.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BasicGraphics">
-      <HintPath>A:\Downloads\Programs\TestPrograms\BasicGraphics.dll</HintPath>
+    <Reference Include="BasicGraphics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>A:\Downloads\Programs\TestPrograms\BasicRenderMore\BasicGraphics.dll</HintPath>
     </Reference>
-    <Reference Include="BasicRender">
-      <HintPath>A:\Downloads\Programs\TestPrograms\BasicRender.dll</HintPath>
+    <Reference Include="BasicRender, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>A:\Downloads\Programs\TestPrograms\BasicRenderMore\BasicRender.dll</HintPath>
     </Reference>
-    <Reference Include="BasicWindows">
-      <HintPath>A:\Downloads\Programs\TestPrograms\BasicWindows.dll</HintPath>
+    <Reference Include="BasicWindows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>A:\Downloads\Programs\TestPrograms\BasicRenderMore\BasicWindows.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
