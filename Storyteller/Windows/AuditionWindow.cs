@@ -3,10 +3,6 @@ using Igtampe.BasicWindows.WindowElements;
 using Igtampe.Storyteller.StoryTellerElements;
 using Igtampe.Storyteller.Windows.WindowElements;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Igtampe.Storyteller.Windows {
     
@@ -43,7 +39,7 @@ namespace Igtampe.Storyteller.Windows {
 
         /// <summary>Button that will show a DialogBox with a given description when pressed.</summary>
         private class DescriptionButton:Button {
-            private string Description;
+            private readonly string Description;
 
             public DescriptionButton(Window Parent, string Description, int LeftPos, int TopPos):base(Parent,"[  Description  ]",ConsoleColor.DarkGray,ConsoleColor.White,ConsoleColor.DarkBlue,LeftPos,TopPos) {this.Description = Description;}
             public override KeyPressReturn Action() {

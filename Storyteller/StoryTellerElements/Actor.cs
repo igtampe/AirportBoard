@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using SpeechLib;
 
 namespace Igtampe.Storyteller.StoryTellerElements {
@@ -12,7 +8,7 @@ namespace Igtampe.Storyteller.StoryTellerElements {
     public class Actor {
 
         /// <summary>Holds the actual SAPI Object</summary>
-        private SpVoice SAPI;
+        private readonly SpVoice SAPI;
 
         /// <summary>All possible voices for this actor.</summary>
         public ISpeechObjectTokens AllVoices => SAPI.GetVoices();

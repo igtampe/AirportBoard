@@ -1,19 +1,15 @@
 ﻿using AirportBoard;
 using Igtampe.BasicGraphics;
 using Igtampe.BasicRender;
-using Igtampe.BasicWindows;
 using Igtampe.Storyteller.Windows;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Igtampe.Storyteller.StoryTellerElements {
     public class Stage:IABParser {
 
-        private Dictionary<String,Actor> Cast;
-        private Actor DefaultActor;
+        private readonly Dictionary<String,Actor> Cast;
+        private readonly Actor DefaultActor;
 
         /// <summary>Sets the stage</summary>
         public Stage(){
@@ -34,6 +30,14 @@ namespace Igtampe.Storyteller.StoryTellerElements {
                     AuditionWindow ActorWindow = new AuditionWindow(CommandSplit[1], GraphicUtils.ColorCharToConsoleColor(CommandSplit[2][0]),int.Parse(CommandSplit[3]),string.Join(" ",CommandSplit,4,CommandSplit.Length-4));
                     ActorWindow.Execute();
                     Cast.Add(ActorWindow.SelectedActor.Name,ActorWindow.SelectedActor);
+                    return true;
+                case "HEADER":
+                    //Header Mark
+                    RenderUtils.Echo(".");
+                    RenderUtils.Color(Cast[CommandSplit[1]].Color);
+                    String HeaderText = "_[" + CommandSplit[1] + "]_";
+                    RenderUtils.Echo(HeaderText);
+                    for(int i = 0; i < (Console.WindowWidth-HeaderText.Length); i++) {RenderUtils.Echo("_");}
                     return true;
                 case "SPEAK":
                     //Speak Mark Hello I am a person
