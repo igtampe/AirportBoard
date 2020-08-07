@@ -22,7 +22,7 @@ namespace Igtampe.Storyteller.Windows.WindowElements {
         }
 
         public override KeyPressReturn OnKeyPress(ConsoleKeyInfo Key) {
-            if(Key.Key == ConsoleKey.Enter) {ReturnActor.SayAsync("Hi, I'm " + ReturnActor.VoiceName);}
+            if(Key.Key == ConsoleKey.Enter) {ReturnActor.SayAsync("Hi, I'm " + ReturnActor.VoiceName); return KeyPressReturn.NOTHING; }
             KeyPressReturn RET = VoiceSelector.OnKeyPress(Key);
 
             ReturnActor.Voice = ReturnActor.AllVoices.Item(VoiceSelector.SelectedItemIndex);
@@ -30,6 +30,9 @@ namespace Igtampe.Storyteller.Windows.WindowElements {
             return RET;
         }
 
-        public override void DrawElement() { VoiceSelector.DrawElement(); }
+        public override void DrawElement() {
+            VoiceSelector.Highlighted = Highlighted;
+            VoiceSelector.DrawElement(); 
+        }
     }
 }
