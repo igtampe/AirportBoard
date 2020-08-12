@@ -4,6 +4,7 @@ Both of these programs are very very similar, so we put them in the same repo. T
 Airportboard was originally made as an example of the BasicRender VB.NET module. BasicRender is now a C# Class Library, visible [here](https://github.com/igtampe/BasicRender). More information about the classes are available at the mentiond repo. We're currently in process of porting this from using the VB.NET Module to the C# library.
 
 ## AirportBoard
+![VolucrisTitleCard](https://raw.githubusercontent.com/igtampe/AirportBoard/master/Images/VolucrisNew.png)<br>
 A VB.NET Console public information board renderer. <br>
 **An example configuration is provided in the release**
 
@@ -14,35 +15,38 @@ ABScript files can be written with [ABWriter](https://github.com/igtampe/ABWrite
 
 Each AB File can call upon a few select commands including the following:
 
-`DRAW [File] [Leftpos] [TopPos]`<br>
+#### `DRAW [File] [Leftpos] [TopPos]`<br>
 Draw will draw from a proprietary .DF File. See the BasicGraphic section under [BasicRender's Readme](https://github.com/igtampe/BasicRender) for more information.
 DF Files can be created using [Henja3](https://github.com/igtampe/Henja3), a graphical editor that runs in the console to preview exactly how it would look.
 
-`COLOR [Background][Foreground]`<br>
+#### `COLOR [Background][Foreground]`<br>
 Color changes the color of all text typed afterwards. Use a Hexadecimal number to specify background and foreground colors. See the BasicGraphic section under [BasicRender's Readme](https://github.com/igtampe/BasicRender) for more information. There is no space between Background and Foreground. It's phrased exactly like the color command on the windows commandline. (IE: Color 0F)
      
-`TEXT~[TEXT]~[COLOR]~[LEFTPOS]~[TOPPOS]`<br>
+#### `TEXT~[TEXT]~[COLOR]~[LEFTPOS]~[TOPPOS]`<br>
 Text is the only command separated with tildes. This is to allow spaces in the text you write. Color is specified with two hexadecimal numbers. Use LeftPos and TopPos to specify where the text should start.
 
-`CenterText~[Text]~[Line]`<br>
+#### `CenterText~[Text]~[Line]`<br>
 I lied. There's one more separated with tildes. CenterText will render a centered piece of text at the specified line. Note that the last set background color (using COLOR) will be the color of the text and the preceeding space.
      
-`BOX [color] [Length] [Height] [LeftPos] [TopPos]`<br>
+#### `BOX [color] [Length] [Height] [LeftPos] [TopPos]`<br>
 BOX Will render a box of the specified color (as a hexadecimal number), length, and width at the specified upper left corner coordinate.
      
-`CLEAR`<br>
+#### `CLEAR`<br>
 It clears the screen. The background color is the last specified background color by using COLOR.
 
-`RUN [File]`<br>
+#### `RUN [File]`<br>
 Runs another AB File. Useful if you need to redo something like the Footer or Header.
      
-`CLOCK [COLOR] [Leftpos] [Toppos]`<br>
+#### `CLOCK [COLOR] [Leftpos] [Toppos]`<br>
 Displays the time in the specified color (as two hexadecimal numbers without a space between them) at the specified position.
      
-`DATE [COLOR] [Leftpos] [Toppos]`<br>
+#### `DATE [COLOR] [Leftpos] [Toppos]`<br>
 Same as Clock but instead of time it's the date.
 
-`WeatherWindow [WeatherWindow File] [Columns] [Rows] [Leftmost] [Topmost]`<br>
+#### `WeatherWindow [WeatherWindow File] [Columns] [Rows] [Leftmost] [Topmost]`<br>
+![WeatherWindow](https://raw.githubusercontent.com/igtampe/AirportBoard/master/Images/WeatherWindowActual.png)<br>
+_Page 4 of the included AirportBoard configuration, which shows a WeatherWindow (`WeatherWindow CommonDestinations.WW 2 3 10 4`)_<br><br>
+
 WeatherWindow uses a WeatherWindow file (.ww) to display a table (With specified columns and rows) of weather information at the specified position. A weather Window file is structured with this information:
      
           [First Line of Text]~[Second Line of Text]~[Weather Icon]
@@ -53,7 +57,7 @@ Here's a portion of CommonWeather.DF to illustrate this:
           Jimoto: 70F    ~Raining          ~TinyWeatherIcons\rain.df
           Hepe Intl: 85F ~Sunny            ~TinyWeatherIcons\sun.df
           
-`NewsWindow [NewsPage File]`<br>
+#### `NewsWindow [NewsPage File]`<br>
 NewsWindow generates a window of news based on a newspage file (.np). NewsPage files are rather easy to make. Here's an example:
      
           [Header]
@@ -72,7 +76,10 @@ Here's a portion of ReliantNews.np to illustrate:
  
 Note that Airportboard doesn't format the text to avoid text being split at line changes, so keep that in mind when writing blurbs.
      
-`FlightWindow [FlightWindowFile] [IsDepartures]`<br>
+#### `FlightWindow [FlightWindowFile] [IsDepartures]`<br>
+![DepartureWindow](https://raw.githubusercontent.com/igtampe/AirportBoard/master/Images/DepartureWindow.png)<br>
+_Page 8 of the included AirportBoard configuration, which shows a FlightWindow in Departure mode (`FlightWindow Departures.FW TRUE`)_<br><br>
+
 FlightWindow generates a table of departures and arrivals based on a FlightWindow File (.fw). IsDepartures specifies wether theFlightWindow is a departure board or an arrivals board. Each Flightwindow file is formatted as such:
      
           --(TERMINAL LETTER OR NUMBER)
@@ -96,6 +103,7 @@ Here's an example of one terminal from Arrivals.fw:
 Note that you can also comment stuff out by adding a semicolon (;) at the start of a line in .FW Files and with an appostraphe (') on .AB Files. You can execute an .AB File by opening it with AirportBoard (Dragging it into AirportBoard's icon), and preview .df files with the same procedure (note that Airportboard will close as soon as its done rendering it).
 
 ## LandingPad
+![LandingPad Cookie Logo](https://raw.githubusercontent.com/igtampe/AirportBoard/master/Images/LandingPad.png)<br>
 A VB.NET Menu-type thing which uses AirportBoard as a base.<br>
 **An Example configuration is available on our release**
 
@@ -120,14 +128,16 @@ In addition, Main.AB should tell users that hitting `A` will launch the about pa
 #### Options.txt
 Options.txt should hold which keychar a user should press to run a certain command on the host machine. The format for each line is as follows:
 ```
-1~CMD
+1~WinVer
 ```
 
 #### PreAction.ab
 Pre-action is run before an action/command is to be executed, and when disconnecting from the terminal. It should say something like "Stand By". Note that when disconnecting, LandingPad will draw Centered text saying `G O O D B Y E` on whatever row the cursor happens to be on.
 
 #### About.AB
-About.AB is run by the about page. It should really only use lines 0 through 15. Line 16 will display (in centered text) `LandingPad V (version)`, Lines 18 and 19 display the HiColor rainbow, Line 21 displays `based on AirportBoard 2.0`, and line 22 displys `A Program by Igtampe, 2020` becuase I had to stick my name on their somewhere.
+![Default About Page](https://raw.githubusercontent.com/igtampe/AirportBoard/master/Images/LandingPad%20About.png)<br>
+_Default About Page included in the release_<br><br>
+About.AB is run by the about page. It should really only use lines 0 through 15. Line 16 will display (in centered text) `LandingPad V (version)`, Lines 18 and 19 display the old HiColor rainbow, Line 21 displays `based on AirportBoard 2.0`, and line 22 displys `A Program by Igtampe, 2020` becuase I had to stick my name on their somewhere.
 
 #### ConsolePass.txt (Optional)
 ConsolePass.txt holds the password used to access the actual console (CMD). Without it, the board won't allow users to access the console. It's stored in Plaintext.
@@ -138,6 +148,6 @@ LandingPad will re-execute the current page from the start once it returns after
 
 ----
 
-I hope you all can enjoy and find some use in this mess I made. 
+I hope you all can enjoy and find some use in this mess I made. <br>
 -IGT
 
