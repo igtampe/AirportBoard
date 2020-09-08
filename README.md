@@ -1,7 +1,11 @@
 # AirportBoard and LandingPad
 Both of these programs are very very similar, so we put them in the same repo. Though we probably shouldn't've but oh well, now its time to deal with the consequences of our actions.
 
-Airportboard was originally made as an example of the BasicRender VB.NET module. BasicRender is now a C# Class Library, visible [here](https://github.com/igtampe/BasicRender). More information about the classes are available at the mentiond repo. We're currently in process of porting this from using the VB.NET Module to the C# library.
+Airportboard was originally made as an example of the BasicRender VB.NET module. BasicRender is now a C# Class Library, visible [here](https://github.com/igtampe/BasicRender). More information about the classes are available at the mentiond repo. We've managed to port this app from the VB.NET Module to the C# library.
+
+AirportBoard is based on the strategies used on the Publicus Network Billboard batch program made as part of the Network Services package I made back in 2015, and I upgraded in 2017. Publicus is included in the source of this project, along with 2 configurations (one from 2015, and one from 2017). In addition, [here](http://igtdos.blogspot.com/2014/06/network-services-version-20.html) is a post from the Igtampe DOS Blog which mentions it, and has a link to the network services package with Publicus 1.0. 
+
+Publicus was inspired by the overnight teletext service Nite-Owl which was used by WFLD Channel 32 in 1982. A recording of the system in action is viewable [here](https://youtu.be/Bgs0kbxo68w)
 
 ## AirportBoard
 ![VolucrisTitleCard](https://raw.githubusercontent.com/igtampe/AirportBoard/master/Images/VolucrisNew.png)<br>
